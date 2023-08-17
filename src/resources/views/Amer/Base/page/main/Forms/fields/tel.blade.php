@@ -1,0 +1,14 @@
+<!-- tel-->
+<?php
+if(isset($field['maxlength'])){$field['attributes']['maxlength']=(int) $field['maxlength'];}
+if(isset($field['minlength'])){$field['attributes']['minlength']=(int) $field['minlength'];}
+if(isset($field['pattern'])){$field['attributes']['pattern']=$field['pattern'];}
+if(isset($field['placeholder'])){$field['attributes']['placeholder']=$field['placeholder'];}
+if(isset($field['size'])){$field['attributes']['size']=$field['size'];}
+?>
+<input 
+name="{{ $field['name'] }}" 
+value="{{ old_empty_or_null($field['name'], '') ??  $field['value'] ?? $field['default'] ?? '' }}" 
+type="tel" 
+@include(fieldview('inc.attributes'))
+>

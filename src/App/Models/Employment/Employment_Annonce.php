@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Models\Employment;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+class Employment_Annonce extends Model
+{
+    use HasFactory;
+    use SoftDeletes;
+    protected $table = 'Employment_Annonce';
+    protected $primaryKey = 'id';
+    public $incrementing = true;
+    public $timestamps = true;
+
+    protected $fillable = ['Annonce_id','Text','Statue'];
+    protected $dates = ['deleted_at'];
+    public static $list=[];
+    public static $fileds=[];
+    public function Employment_StartAnnonces()
+                {
+                    return $this->hasOne(Employment_StartAnnonces::class,'id', 'Annonce_id');
+                }
+}
