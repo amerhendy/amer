@@ -1,0 +1,95 @@
+function arabicKeyboard(element){
+    element=element.currentTarget;
+    $(element).val($(element).val().replace(/[`]/g, "ذ"));
+    $(element).val($(element).val().replace(/~/g, "ذ"));
+    $(element).val($(element).val().replace(/۰/g, "0"));
+    $(element).val($(element).val().replace(/۱/g, "1"));
+    $(element).val($(element).val().replace(/۲/g, "2"));
+    $(element).val($(element).val().replace(/۳/g, "3"));
+    $(element).val($(element).val().replace(/٤/g, "4"));
+    $(element).val($(element).val().replace(/۵/g, "5"));
+    $(element).val($(element).val().replace(/٦/g, "6"));
+    $(element).val($(element).val().replace(/۷/g, "7"));
+    $(element).val($(element).val().replace(/۸/g, "8"));
+    $(element).val($(element).val().replace(/۹/g, "9"));
+    $(element).val($(element).val().replace(/۰/g, "0"));
+    $(element).val($(element).val().replace(/q/g, "ض"));
+    $(element).val($(element).val().replace(/w/g, "ص"));
+    $(element).val($(element).val().replace(/e/g, "ث"));
+    $(element).val($(element).val().replace(/r/g, "ق"));
+    $(element).val($(element).val().replace(/t/g, "ف"));
+    $(element).val($(element).val().replace(/y/g, "غ"));
+    $(element).val($(element).val().replace(/u/g, "ع"));
+    $(element).val($(element).val().replace(/i/g, "ه"));
+    $(element).val($(element).val().replace(/o/g, "خ"));
+    $(element).val($(element).val().replace(/p/g, "ح"));
+    $(element).val($(element).val().replace(/\[/g, "ج"));
+    $(element).val($(element).val().replace(/\]/g, "د"));
+    $(element).val($(element).val().replace(/a/g, "ش"));
+    $(element).val($(element).val().replace(/s/g, "س"));
+    $(element).val($(element).val().replace(/d/g, "ي"));
+    $(element).val($(element).val().replace(/f/g, "ب"));
+    $(element).val($(element).val().replace(/g/g, "ل"));
+    $(element).val($(element).val().replace(/h/g, "ا"));
+    $(element).val($(element).val().replace(/j/g, "ت"));
+    $(element).val($(element).val().replace(/k/g, "ن"));
+    $(element).val($(element).val().replace(/l/g, "م"));
+    $(element).val($(element).val().replace(/\;/g, "ك"));
+    $(element).val($(element).val().replace(/\'/g, "ط"));
+    $(element).val($(element).val().replace(/z/g, "ئ"));
+    $(element).val($(element).val().replace(/x/g, "ء"));
+    $(element).val($(element).val().replace(/c/g, "ؤ"));
+    $(element).val($(element).val().replace(/v/g, "ر"));
+    $(element).val($(element).val().replace(/b/g, "لا"));
+    $(element).val($(element).val().replace(/n/g, "ى"));
+    $(element).val($(element).val().replace(/m/g, "ة"));
+    $(element).val($(element).val().replace(/\,/g, "و"));
+    $(element).val($(element).val().replace(/\./g, "ز"));
+    $(element).val($(element).val().replace(/\//g, "ظ"));
+    $(element).val($(element).val().replace(/~/g, " ّ"));
+    $(element).val($(element).val().replace(/Q/g, "َ"));
+    $(element).val($(element).val().replace(/W/g, "ً"));
+    $(element).val($(element).val().replace(/E/g, "ُ"));
+    $(element).val($(element).val().replace(/R/g, "ٌ"));
+    $(element).val($(element).val().replace(/T/g, "لإ"));
+    $(element).val($(element).val().replace(/Y/g, "إ"));
+    $(element).val($(element).val().replace(/U/g, "‘"));
+    $(element).val($(element).val().replace(/I/g, "÷"));
+    $(element).val($(element).val().replace(/O/g, "×"));
+    $(element).val($(element).val().replace(/P/g, "؛"));
+    $(element).val($(element).val().replace(/A/g, "ِ"));
+    $(element).val($(element).val().replace(/S/g, "ٍ"));
+    $(element).val($(element).val().replace(/G/g, "لأ"));
+    $(element).val($(element).val().replace(/H/g, "أ"));
+    $(element).val($(element).val().replace(/J/g, "ـ"));
+    $(element).val($(element).val().replace(/K/g, "،"));
+    $(element).val($(element).val().replace(/L/g, "/"));
+    $(element).val($(element).val().replace(/Z/g, "~"));
+    $(element).val($(element).val().replace(/X/g, "ْ"));
+    $(element).val($(element).val().replace(/B/g, "لآ"));
+    $(element).val($(element).val().replace(/N/g, "آ"));
+    $(element).val($(element).val().replace(/M/g, "’"));
+    $(element).val($(element).val().replace(/\?/g, "؟"));
+}
+function toEnglishNumber(element) {
+    element=element.currentTarget;
+    $(element).val($(element).val().replace(/٠/g, "0"));
+    $(element).val($(element).val().replace(/١/g, "1"));
+    $(element).val($(element).val().replace(/٢/g, "2"));
+    $(element).val($(element).val().replace(/٣/g, "3"));
+    $(element).val($(element).val().replace(/٤/g, "4"));
+    $(element).val($(element).val().replace(/٥/g, "5"));
+    $(element).val($(element).val().replace(/٦/g, "6"));
+    $(element).val($(element).val().replace(/٧/g, "7"));
+    $(element).val($(element).val().replace(/٨/g, "8"));
+    $(element).val($(element).val().replace(/٩/g, "9"));
+}
+function numberDateToArabic(year,month,day){
+    var date = new Date(year,month,day);
+    var months = ["يناير", "فبراير", "مارس", "إبريل", "مايو", "يونيو",
+      "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"
+    ];
+    var days = ["اﻷحد", "اﻷثنين", "الثلاثاء", "اﻷربعاء", "الخميس", "الجمعة", "السبت"];
+    var delDateString = days[date.getDay()] + ', ' + date.getDate() + ' ' + months[date.getMonth()] + ', ' + date.getFullYear();
+    return delDateString;
+}

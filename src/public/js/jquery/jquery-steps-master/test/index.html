@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Jasmine Spec Runner</title>
+  <link rel="shortcut icon" type="image/png" href="http://jasmine.github.io/images/jasmine.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.7.1/jasmine.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.7.1/jasmine.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.7.1/jasmine-html.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.7.1/boot.min.js"></script>
+</head>
+<body>
+
+  <script id="tpl-demo" type="text/html">
+    <div class="step-app" id="demo" style="display: none;">
+      <ul class="step-steps">
+        <% for(var i = 0; i < stepsCount; i++){ %>
+          <li data-step-target="step{{i}}">Step {{i}}</li>
+        <% } %>
+      </ul>
+      <div class="step-content">
+        <% for(var i = 0; i < stepsCount; i++){ %>
+          <div class="step-tab-panel" data-step="step{{i}}">
+            ... step{{i}}
+          </div>
+        <% } %>
+      </div>
+      <div class="step-footer">
+        <button data-step-action="prev" class="step-btn">Previous</button>
+        <button data-step-action="next" class="step-btn">Next</button>
+        <button data-step-action="finish" class="step-btn">Finish</button>
+      </div>
+    </div>
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/art-template@4.13.2/lib/template-web.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  <script src="../dist/jquery-steps.js"></script>
+  <script src="spec.js"></script>
+</body>
+</html>

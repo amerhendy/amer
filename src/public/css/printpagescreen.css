@@ -1,0 +1,89 @@
+header {
+  display: block;margin-bottom: 0px;
+  page-break-before: always;
+}
+div{page-break-inside:auto !important;page-break-before : auto;}
+header.title:before {
+counter-increment: chapternum;
+content: counter(chapternum) ". ";
+}
+figcaption:before {
+counter-increment: figurenum;
+content: counter(chapternum) "-" counter(figurenum) "";
+}
+page,table, img, svg {
+page-break-inside:auto;
+}
+ol,ul {
+  padding: 0 !important;
+  margin:0px !important;
+  
+}
+body {
+font: 12pt Georgia, "Times New Roman", Times, serif;
+line-height: 1.1;
+}
+div{
+text-align:justify !important;
+}
+
+page:last-child{
+page-break-after:auto;
+}
+html,body {
+background: rgb(255,255,255);
+direction: rtl;
+font-size:12pt;
+}
+#polarimg {
+object-fit: contain;
+max-width:50%;
+max-height:50%;;
+vertical-align: middle;
+border-style: none;
+}
+#jobName{
+  background-image: var(--bs-gradient) !important;
+  --bs-bg-opacity: 1;
+  background-color: rgba(37, 135, 239,1) !important;
+  font-family: 'AmerHendyAli','Arial';
+}
+#pageheader{
+  /*background-color: hsla(0, 12%, 91%, 0.888);*/
+  background-image: var(--bs-gradient) !important;
+  --bs-bg-opacity: 1;
+  background-color: rgba(13, 110, 253,1) !important;
+  font-family: 'AmerHendyAli','Arial';
+}
+#texttitle{
+  background-color: hsla(0, 12%, 91%, 0.888);
+  font-family: 'AmerHendyAli','Arial';
+}
+page{
+display:block;
+background: white;
+padding:0.5cm;
+margin:1cm;
+box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+border:1px solid;
+width:8.27in;
+height:21cm;
+font-size:12pt;
+object-fit: contain;
+}
+.border-bottom {
+border-bottom: 1px solid #000 !important;
+}
+.border-bottom-colored {
+border-bottom: 1px dashed #dee2e6 !important;
+}
+.border-right {
+border-right: 1px solid #dee2e6 !important;
+}
+.border-left {
+border-left: 1px solid #dee2e6 !important;
+}
+.border-top {
+border-top: 1px solid #dee2e6 !important;
+}
+.border{border: 1px solid #000 !important;}
