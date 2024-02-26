@@ -1,9 +1,7 @@
 {
     "name": "amerhendy/amer",
 	"description": "Amer",
-    "type": "library",
-    "license": "proprietary",
-    "version": "0.0.1",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Amerhendy\\Amer\\": "src/"
