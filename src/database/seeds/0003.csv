@@ -1,0 +1,10 @@
+﻿id;title;icon;protocol;link;target;parent_id;lft;rgt;depth;created_at;updated_at;deleted_at
+5;خدمات القابضة;fab fa-servicestack;internal_link;;_blank;;6;19;1;2021-01-22 17:04:26;2021-01-22 17:11:15;
+4;تطبيق 125 - ايفون;fab fa-apple;external_link;https://apps.apple.com/eg/app/%D9%A1%D9%A2%D9%A5/id1431089961;_blank;5;7;8;2;2021-01-22 16:51:52;2021-01-22 17:11:15;
+3;تطبيق 125 - اندرويد;fab fa-android;external_link;https://play.google.com/store/apps/details?id=hcww.orchtech.com.ebrd_live;_blank;5;9;10;2;2021-01-22 16:50:54;2021-01-22 17:11:15;
+6;تطبيق قراءتى;fas fa-credit-card;external_link;https://play.google.com/store/apps/details?id=com.hcww.it.myreading&hl=ar&gl=US;_blank;5;11;12;2;2021-01-22 17:07:39;2021-01-22 17:11:15;
+7;شكاوى المواطنين;fab fa-accusoft;external_link;https://cms.hcww.com.eg/WebsiteComplaints/Web_CustomerComplaint?CID=23;_blank;5;13;14;2;2021-01-22 17:08:28;2021-01-22 17:11:15;
+9;دفع الفواتير - فورى;fas fa-money-bill;external_link;https://myfawry.com/MyFawryWeb/home.jsp#/registerCustomer/registerCustomerPersonalInfo;_blank;5;15;16;2;2021-01-22 17:10:25;2021-02-09 19:22:12;2021-02-09 19:22:12
+8;احسب فاتورتك;far fa-money-bill-alt;external_link;https://www.hcww.com.eg/bill-calc/;_blank;5;17;18;2;2021-01-22 17:09:45;2021-02-09 19:22:31;2021-02-09 19:22:31
+1;الرئيسية;fas fa-home;internal_link;;_blank;;2;3;1;;2021-01-22 17:11:15;
+2;FaceBook;fab fa-facebook-f;external_link;https://www.facebook.com/sinaiwaterpr2020/;_blank;;4;5;1;;2021-01-22 17:11:15;
