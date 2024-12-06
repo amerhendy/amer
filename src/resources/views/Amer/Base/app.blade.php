@@ -1,11 +1,11 @@
 <?php
 //dd(convert_uuencode(json_encode([convert_uuencode(env("API_CLIENT_ID") ?? ""),convert_uuencode(env("API_CLIENT_SECRET") ?? "")])));
 $website=\Str::finish(config('app.url'),'/');
-$apilinks=\Str::finish($website.'api/'.config("Amer.amer.api_version")??"",'/');
+$apilinks=\Str::finish($website.'api/'.config("Amer.Amer.api_version")??"",'/');
 ?>
 <!-- app -->
 <!DOCTYPE html>
-<html lang="{{config('amer.lang') ?? 'ar-eg'}}" dir="{{config('amer.lang') ?? 'rtl'}} " prefix="{{config('amer.co_name') ?? 'HCWW'}}" data-bs-theme="auto">
+<html lang="{{config('Amer.Amer.lang') ?? 'ar-eg'}}" dir="{{config('Amer.Amer.html_direction') ?? 'rtl'}} " prefix="{{config('Amer.Amer.co_name') ?? 'HCWW'}}" data-bs-theme="auto">
 @stack('beforehead')
 <head>
     @include(mainview('head.meta'))
@@ -53,19 +53,19 @@ $apilinks=\Str::finish($website.'api/'.config("Amer.amer.api_version")??"",'/');
             @yield('before_content_widgets')
           @yield('content')
           @yield('after_content_widgets')
-          
+
     </div>
         </div>
     </div>
 
 
 <!-- app.blade.php -->
-    
-        
+
+
 	<!-- app.blade.php -->
 </main>
 <!-- app.blade.php -->
-<footer class="bg-dark text-center text-lg-start page-footer font-small">
+<footer class="nsscwwbgcolor text-center text-lg-start page-footer font-small">
     @include(mainview('Footer.footer'))
 </footer>
 <!-- app.blade.php -->

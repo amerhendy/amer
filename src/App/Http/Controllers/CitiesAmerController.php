@@ -1,6 +1,6 @@
 <?php
 namespace Amerhendy\Amer\App\Http\Controllers;
-use \Amerhendy\Amer\App\Models\Cities as Cities;
+use \Amerhendy\Amer\App\Models\Cities as City;
 use Illuminate\Support\Facades\DB;
 use \Amerhendy\Amer\App\Http\Controllers\Base\AmerController;
 use \Amerhendy\Amer\App\Helpers\Library\AmerPanel\AmerPanelFacade as AMER;
@@ -22,10 +22,9 @@ class CitiesAmerController extends AmerController
     use \Amerhendy\Amer\App\Http\Controllers\Base\Operations\InlineCreateOperation;
     public function setup()
     {
-        AMER::setModel(Cities::class);
-        AMER::setRoute(config('Amer.amer.route_prefix') . '/Cities');
+        AMER::setModel(City::class);
+        AMER::setRoute(config('Amer.Amer.route_prefix') . '/Cities');
         AMER::setEntityNameStrings(trans('AMER::Cities.singular'), trans('AMER::Cities.plural'));
-        /*
         $this->Amer->setTitle(trans('AMER::Cities.create'), 'create');
         $this->Amer->setHeading(trans('AMER::Cities.create'), 'create');
         $this->Amer->setSubheading(trans('AMER::Cities.create'), 'create');
@@ -35,12 +34,12 @@ class CitiesAmerController extends AmerController
         $this->Amer->addClause('where', 'deleted_at', '=', null);
         $this->Amer->enableDetailsRow ();
         $this->Amer->allowAccess ('details_row');
-        if(amer_user()->can('Cities-add') == 0){$this->Amer->denyAccess('create');}
+        if(amer_user()->can('Cities-Create') == 0){$this->Amer->denyAccess('create');}
         if(amer_user()->can('Cities-trash') == 0){$this->Amer->denyAccess ('trash');}
         if(amer_user()->can('Cities-update') == 0){$this->Amer->denyAccess('update');}
         if(amer_user()->can('Cities-delete') == 0){$this->Amer->denyAccess('delete');}
         if(amer_user()->can('Cities-show') == 0){$this->Amer->denyAccess('show');}
-        */
+
     }
     protected function setupShowOperation()
     {
@@ -49,12 +48,12 @@ class CitiesAmerController extends AmerController
     protected function setupListOperation(){
         AMER::addColumns([
             [
-                'name'=>'Name',
+                'name'=>'name',
                 'type'=>'text',
                 'label'=>trans('AMER::Cities.singular'),
             ],
             [
-                'name'=>'English',
+                'name'=>'english',
                 'type'=>'text',
                 'label'=>trans('AMER::Cities.singular'),
             ],
@@ -64,31 +63,49 @@ class CitiesAmerController extends AmerController
                 'label'=>trans('AMER::Governorates.plural'),
                 'model'=>\Amerhendy\Amer\App\Models\Governorates::class,
                 'entity'=>'Governorates',
-                'attribute'=>'Name'
+                'attribute'=>'name'
             ]
         ]);
     }
     function fields(){
         AMER::addField([
-            'name'=>'Name',
+            'name'=>'name',
             'type'=>'text',
             'label'=>trans('AMER::Cities.singular'),
         ]);
         AMER::addField([
-            'name'=>'English',
+            'name'=>'english',
             'type'=>'text',
             'label'=>trans('AMER::Cities.singular'),
         ]);
         $routes=$this->Amer->routelist;
+/*
+        Amer::addField([
+            'label' => trans('AMER::Governorates.singular'),
+            'type'=>'select2_from_ajax',
+            'name' => 'gov_id',
+            'data_source'=>$routes['fetchGovernorate']['as'],
+            'model'=>\Amerhendy\Amer\App\Models\Governorates::class,
+            'entity'=>'Governorates',
+            'attribute'=>'name',
+            'placeholder'=> trans('AMER::Governorates.singular'),
+            'include_all_form_fields' => false,
+            'minimum_input_length'    => 0,
+            //'dependencies'            => ['Group_id'],
+            'selectall'=>true
+        ]);*/
         AMER::addField([
             'name'=>'Governorates',
             'type' => "relationship",
             'model'=>\Amerhendy\Amer\App\Models\Governorates::class,
-            'attribute'=>'Name',
+            'attribute'=>'name',
             'include_all_form_fields'=>true,
             'inline_create'=>true,
+            'pivot_key_name'=>'gov_id',
+            'ajax'          => true,
+            'minimum_input_length'=>0,
             //'ajax'=>$routes['fetchCities']['as'],
-            'data_source'=>$routes['fetchGovernorates']['as'],
+            'data_source'=>$routes['fetchGovernorate']['as'],
         ]);
     }
     protected function setupCreateOperation()
@@ -101,25 +118,14 @@ class CitiesAmerController extends AmerController
         AMER::setValidation(CitiesRequest::class);
         $this->fields();
     }
-    public function store(CitiesRequest $request)
-    {
-        $table=$this->Amer->model->getTable();
-        $lsid=DB::table($table)->get()->max('id');
-        $id=$lsid+1;
-        $this->Amer->addField(['type' => 'hidden', 'name' => 'id', 'value'=>$id]);
-        $this->Amer->getRequest()->request->add(['id'=> $id]);
-        $this->Amer->setRequest($this->Amer->validateRequest());
-        $this->Amer->unsetValidation();
-        return $this->traitStore();
-    }
     public function destroy($id)
     {
         $this->Amer->hasAccessOrFail('delete');
         $data=$this->Amer->model::remove_force($id);
         return $data;
     }
-    public function fetchGovernorates()
+    public function fetchGovernorate()
     {
-        return $this->fetch(['model'=>\Amerhendy\Amer\App\Models\Governorates::class,'searchable_attributes'=>'Name']);
+        return $this->fetch(['model'=>\Amerhendy\Amer\App\Models\Governorates::class,'searchable_attributes'=>'name']);
     }
 }

@@ -22,7 +22,6 @@ trait Create
         [$directInputs, $relationInputs] = $this->splitInputIntoDirectAndRelations($input);
         //dd($directInputs);
         $item = $this->model->create($directInputs);
-        //dd($item);
         $this->createRelationsForItem($item, $relationInputs);
 
         return $item;
@@ -49,7 +48,7 @@ trait Create
         if (empty($fields)) {
             $fields = $this->getCleanStateFields();
         }
-        
+
         $relationFields = [];
         foreach ($fields as $field) {
             if (isset($field['model']) && $field['model'] !== false && $field['entity'] !== false) {
@@ -103,6 +102,7 @@ trait Create
                 case 'HasMany':
                 case 'MorphMany':
                     $relationValues = $relationDetails['values'][$relationMethod];
+                    dd($relationValues);
                     // if relation values are null we can only attach, also we check if we sent
                     // - a single dimensional array: [1,2,3]
                     // - an array of arrays: [[1][2][3]]

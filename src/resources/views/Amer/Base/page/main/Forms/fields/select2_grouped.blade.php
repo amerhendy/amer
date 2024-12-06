@@ -57,7 +57,7 @@
             @endif
     </select>
         @if (isset($field['hint']))
-        <p class="help-block">{!! $field['hint'] !!}</p>
+        <small class="form-text text-muted">{!! $field['hint'] ?? '' !!}</small>
     @endif
 @include(fieldview('inc.wrapper_end'))
     @push('after_styles')
@@ -71,16 +71,13 @@
         @if (app()->getLocale() !== 'en')
         @loadScriptOnce('js/packages/select2/dist/js/i18n/' . str_replace('_', '-', app()->getLocale()) . '.js')
         @endif
+        @loadScriptOnce('js/Amer/forms/select2.js')
         <script>
             function bpFieldInitSelect2GroupedElement(element) {
                 if (!element.hasClass("select2-hidden-accessible"))
-                {   
-                    let $isFieldInline = element.data('field-is-inline');
-
-                    element.select2({
-                        theme: "bootstrap",
-                        dropdownParent: $isFieldInline ? $('#inline-create-dialog .modal-content') : document.body
-                    });
+                {
+                    select2f=setSelect2Info($(element).attr('uniqueid'));
+                    $(element).select2(select2f);
                 }
             }
         </script>

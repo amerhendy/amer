@@ -38,7 +38,7 @@ class AmerColumn
     public function __construct($name)
     {
         $column = $this->Amer()->firstColumnWhere('name', $name);
-		
+
 
         // if column exists
         if ((bool) $column) {

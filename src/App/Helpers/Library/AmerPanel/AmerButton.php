@@ -20,13 +20,11 @@ class AmerButton
         if (is_array($name)) {
             extract($name);
         }
-
         $this->name = $name ?? 'button_'.rand(1, 999999999);
         $this->stack = $stack ?? 'top';
         $this->type = $type ?? 'view';
         $this->content = $content;
         $this->position = $position ?? ($this->stack == 'line' ? 'beginning' : 'end');
-
         return $this->save();
     }
     public static function name($attributes = null)
@@ -176,6 +174,7 @@ class AmerButton
             return $entry->{$button->content}($Amer);
         }
         if ($this->type == 'view') {
+            //dd($button->getFinalViewPath(),$entry);
             return view($button->getFinalViewPath(), compact('button', 'Amer', 'entry'));
         }
 
@@ -352,7 +351,6 @@ class AmerButton
     private function save()
     {
         $itemExists = $this->collection()->contains('name', $this->name);
-
         if (! $itemExists) {
             if ($this->position == 'beginning') {
                 $this->collection()->prepend($this);

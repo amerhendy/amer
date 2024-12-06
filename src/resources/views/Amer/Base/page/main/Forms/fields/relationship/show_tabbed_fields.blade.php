@@ -1,4 +1,4 @@
-@php
+<!--show_tabbed_fields.blade-->@php
     $horizontalTabs = $crud->getTabsType()=='horizontal' ? true : false;
 
     if ($errors->any() && array_key_exists(array_keys($errors->messages())[0], $crud->getCurrentFields()) &&
@@ -60,3 +60,4 @@
     </div>
 </div>
 
+<!--show_tabbed_fields.blade-->

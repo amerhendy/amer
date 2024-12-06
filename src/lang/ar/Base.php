@@ -21,7 +21,7 @@
     'weekLabel' => 'W',
 
     // Fields
-    
+
     //Table field
     'table_cant_add'    => 'Cannot add new :entity',
     'table_max_reached' => 'Maximum number of :max reached',
@@ -41,5 +41,18 @@
     'INVALID_COUNTRY_CODE'=>'كود الدولة خطأ',
     'INVALID_LENGTH'=>'طول الرقم غير مسموح به',
     'IS_POSSIBLE'=>'رقم ممكن',
+    'accesslist'=>[
+        'update'=>'تعديل',
+        'list'=>'قائمة',
+         'show'=>'عرض',
+         'trash'=>'سلة المهملات',
+         'bulkClone'=>'نسخ جماعى',
+         'reorder'=>'اعادة ترتيب',
+         'delete'=>'حذف',
+         'create'=>'انشاء',
+         'clone'=>'مسخ',
+         'BulkDelete'=>'حذف جماعى',
+         'print'=>'طباعة',
+    ]
     ];
 

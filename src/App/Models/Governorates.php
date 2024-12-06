@@ -15,11 +15,11 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 class Governorates extends Model
 {
     use HasFactory,SoftDeletes,AmerTrait,HasRoles,HasApiTokens,Sluggable, SluggableScopeHelpers,HasUuids;
-    protected $table = 'Governorates';
+    protected $table = 'governorates';
     protected $primaryKey = 'id';
     public $incrementing = false;
     protected $keyType = 'string';
-    public $fillable=['Name','English'];
+    public $fillable=['name','english'];
     public $timestamps = true;
     protected $dates = ['deleted_at'];
     public function sluggable(): array
@@ -32,16 +32,16 @@ class Governorates extends Model
         }
         public function Employment_StartAnnonces_Governorates()
         {
-            return $this->belongsToMany(\Amerhendy\Employment\App\Models\Employment_StartAnnonces::class, 'Governorates','id','id');
+            return $this->belongsToMany(\Amerhendy\Employment\App\Models\Employment_StartAnnonces::class, 'governorates','id','id');
         }
         public function Employment_StartAnnonces()
-    
+
         {
-            return $this->belongsToMany(\Amerhendy\Employment\App\Models\Employment_StartAnnonces::class, "Employment_StartAnnonces_Governorates","Governorate_id","Annonce_id")->withTrashed();
-    
+            return $this->belongsToMany(\Amerhendy\Employment\App\Models\Employment_StartAnnonces::class, "employment_startannonces_governorates","governorate_id","annonce_id")->withTrashed();
+
         }
         public function Cities()
         {
-            return $this->hasMany(Cities::class,'Gov_id','id');
+            return $this->hasMany(Cities::class,'gov_id','id');
         }
 }

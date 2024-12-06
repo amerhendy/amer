@@ -89,11 +89,10 @@ trait FieldsProtectedMethods
      * @return array
      */
     public function overwriteFieldNamesFromDotNotationToArray($fields)
-    {
+	{    
         foreach ($fields as $key => $field) {
             $fields[$key] = $this->overwriteFieldNameFromDotNotationToArray($field);
         }
-
         return $fields;
     }
 
@@ -228,7 +227,6 @@ trait FieldsProtectedMethods
         if (! isset($field['type'])) {
             $field['type'] = isset($field['relation_type']) ? $this->inferFieldTypeFromRelationType($field['relation_type']) : $this->inferFieldTypeFromDbColumnType($field['name']);
         }
-
         return $field;
     }
 

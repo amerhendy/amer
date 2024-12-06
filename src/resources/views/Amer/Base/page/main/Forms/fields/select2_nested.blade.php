@@ -75,17 +75,14 @@
     @if (app()->getLocale() !== 'en')
     @loadScriptOnce('js/packages/select2/dist/js/i18n/' . str_replace('_', '-', app()->getLocale()) . '.js')
     @endif
+    @loadScriptOnce('js/Amer/forms/select2.js');
     @loadOnce('bpFieldInitSelect2NestedElement')
         <script>
             function bpFieldInitSelect2NestedElement(element) {
                 if (!element.hasClass("select2-hidden-accessible"))
                 {
-                    let $isFieldInline = element.data('field-is-inline');
-
-                    element.select2({
-                        theme: "bootstrap",
-                        dropdownParent: $isFieldInline ? $('#inline-create-dialog .modal-content') : document.body
-                    });
+                    select2f=setSelect2Info($(element).attr('uniqueid'));
+                    $(element).select2(select2f);
                 }
             }
         </script>

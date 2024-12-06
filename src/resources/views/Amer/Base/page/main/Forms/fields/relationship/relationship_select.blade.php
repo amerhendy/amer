@@ -1,4 +1,4 @@
-@php
+<!--relationship_select.blade-->@php
     $connected_entity = new $field['model'];
     $connected_entity_key_name = $connected_entity->getKeyName();
     $field['multiple'] = $field['multiple'] ?? $Amer->relationAllowsMultiple($field['relation_type']);
@@ -103,7 +103,7 @@
     @loadScriptOnce('js/packages/select2/dist/js/i18n/'.str_replace('_', '-', app()->getLocale()).'.js')
     @endif
 <script>
-    
+
     document.styleSheets[0].addRule('.select2-selection__clear::after','content:  "{{ trans('AMER::Base.clear') }}";');
     function bpFieldInitRelationshipSelectElement(element) {
         var form = element.closest('form');
@@ -157,3 +157,4 @@
     }
 </script>
 @endpush
+<!--relationship_select.blade-->

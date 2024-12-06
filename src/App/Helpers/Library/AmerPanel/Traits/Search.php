@@ -260,7 +260,7 @@ trait Search
         foreach ($this->columns() as $key => $column) {
             $row_items[] = $this->getCellView($column, $entry, $rowNumber);
         }
-		
+
         // add the buttons as the last column
         if ($this->buttons()->where('stack', 'line')->count()) {
             $row_items[] = \View::make(listview('DataTables.button_stack'), ['stack' => 'line'])
@@ -269,7 +269,7 @@ trait Search
                                 ->with('row_number', $rowNumber)
                                 ->render();
         }
-		
+
         // add the bulk actions checkbox to the first column
         if ($this->getOperationSetting('bulkActions')) {
             $bulk_actions_checkbox = \View::make(listview('columns.inc.bulk_actions_checkbox'), ['entry' => $entry])->render();
@@ -313,13 +313,13 @@ trait Search
      */
     private function getCellViewName($column)
     {
-		
-		
+
+
         // return custom column if view_namespace attribute is set
         if (isset($column['view_namespace']) && isset($column['type'])) {
             return $column['view_namespace'].'.'.$column['type'];
         }
-		
+
         if (isset($column['type'])) {
 			// create a list of paths to column blade views
             // including the configured view_namespaces
@@ -334,12 +334,12 @@ trait Search
             if (! in_array(listview('columns.text'), $columnPaths)) {
                 $columnPaths[] = listview('columns.text');
             }
-			
+
             // return the first column blade file that exists
-			
+
             foreach ($columnPaths as $path) {
                 if (view()->exists($path)) {
-					
+
                     return $path;
                 }
             }
@@ -404,7 +404,7 @@ trait Search
             $rows[] = $this->getRowViews($row, $startIndex === false ? false : ++$startIndex);
         }
         return [
-            'draw'            => (isset($this->getRequest()['draw']) ? (int) $this->getRequest()['draw'] : 0),
+            'draw'            => (isset($this->getRequest()['draw']) ? (int) $this->getRequest()['draw'] : 1),
             'recordsTotal'    => $totalRows,
             'recordsFiltered' => $filteredRows,
             'data'            => $rows,

@@ -12,12 +12,19 @@
         <a href="#" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
           <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{{trans('AMER::crud.admin')}}</span>
         </a>
-        <a href="{{Amerurl('Governorates')}}" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
+        <a href="{{Route('amer.Governorates.index')}}" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
           <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{{trans('AMER::Governorates.Governorates')}}</span>
         </a>
-        <a href="{{Amerurl('Cities')}}" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
+        <a href="{{Route('amer.Cities.index')}}" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
           <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{{trans('AMER::Cities.Cities')}}</span>
         </a>
+        <a href="{{Route('amer.Menu.index')}}" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
+          <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{{trans('AMER::Menu.Menus')}}</span>
+        </a>
+
+        @if(\File::exists(base_path('vendor/AmerHendy/PageManger/composer.json')))
+            @include('PageManger::Admin-SideBar')
+        @endif
         @include('Amer::Base.inc.menu.admin')
         <?php $guards=config('auth.guards');?>
         @if(array_key_exists('Amer',$guards))
@@ -31,7 +38,10 @@
             @if(\File::exists(base_path('vendor/AmerHendy/Employment/composer.json')))
               @include('Employment::Admin-SideBar')
             @endif
-            
+            @if(\File::exists(base_path('vendor/AmerHendy/Drivers/composer.json')))
+              @include('Drivers::Admin-SideBar')
+            @endif
+
           @endif
         @endif
       </div>
@@ -79,6 +89,6 @@
         }
       }
     }
-    
+
   </script>
   @endpush

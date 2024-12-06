@@ -5,11 +5,12 @@
     foreach($field['wrapper'] as $attributeKey => $value) {
         $field['wrapper'][$attributeKey] = !is_string($value) && $value instanceof \Closure ? $value($Amer, $field, $entry ?? null) : $value ?? '';
     }
-	// if the field is required in any of the Amer validators (FormRequest, controller validation or field validation) 
-	// we add an astherisc for it. Case it's a subfield, that check is done upstream in repeatable_row. 
+	// if the field is required in any of the Amer validators (FormRequest, controller validation or field validation)
+	// we add an astherisc for it. Case it's a subfield, that check is done upstream in repeatable_row.
 	// the reason for that is that here the field name is already the repeatable name: parent[row][fieldName]
 	if(!isset($field['parentFieldName']) || !$field['parentFieldName']) {
-		if(!is_array($fieldName)){
+		//if(!is_array($fieldName)){
+        if(!is_array($field['name'])){
 			$fieldName = $Amer->holdsMultipleInputs($field['name']) ? explode(',', $field['name']) : [$field['name']];
 		}else{
 
@@ -22,12 +23,12 @@
 				}
 			}
 	}
-	
+
 	// if the developer has intentionally set the required attribute on the field
 	// forget whatever is in the FormRequest, do what the developer wants
 	// subfields also get here with `showAsterisk` already set.
 	$required = isset($field['showAsterisk']) ? ($field['showAsterisk'] ? ' required' : '') : ($required ?? '');
-	
+
 	$field['wrapper']['class'] = $field['wrapper']['class'] ?? "form-group col-sm-12 mb-3";
 	$field['wrapper']['class'] = $field['wrapper']['class'].$required;
 	$field['wrapper']['element'] = $field['wrapper']['element'] ?? 'div';

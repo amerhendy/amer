@@ -60,7 +60,6 @@ trait Buttons
         if ($replaceExisting) {
             $this->removeButton($name, $stack);
         }
-
         return new AmerButton($name, $stack, $type, $content, $position);
     }
 

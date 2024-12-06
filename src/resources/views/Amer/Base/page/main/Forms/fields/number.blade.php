@@ -18,6 +18,6 @@ if(isset($field['step'])){$field['attributes']['step']=$field['step'];}
             @include(fieldview('inc.attributes'))
         	>
     @if (isset($field['hint']))
-        <p class="help-block">{!! $field['hint'] !!}</p>
+        <small class="form-text text-muted">{!! $field['hint'] ?? '' !!}</small>
     @endif
 @include(fieldview('inc.wrapper_end'))

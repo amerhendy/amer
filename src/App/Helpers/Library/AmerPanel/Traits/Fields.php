@@ -41,7 +41,7 @@ trait Fields
      * @return array The correct definition of that field.
      */
     public function makeSureFieldHasNecessaryAttributes($field)
-    {   
+    {
         $field = $this->makeSureFieldHasName($field);
         $field = $this->makeSureFieldHasEntity($field);
         $field = $this->makeSureFieldHasLabel($field);
@@ -86,6 +86,7 @@ trait Fields
     public function registerFieldEvents()
     {
         foreach ($this->getCleanStateFields() as $key => $field) {
+			
             if (isset($field['events'])) {
                 foreach ($field['events'] as $event => $closure) {
                     $this->model->{$event}($closure);
@@ -102,10 +103,11 @@ trait Fields
      */
     public function addField($field)
     {
-        
+
         $field = $this->makeSureFieldHasNecessaryAttributes($field);
         $this->enableTabsIfFieldUsesThem($field);
         $this->addFieldToOperationSettings($field);
+		
         return $this;
     }
 
@@ -283,7 +285,6 @@ trait Fields
         $model = $model ? $model : $this->model;
         $fields = $this->getCleanStateFields();
         $casted_attributes = $model->getCastedAttributes();
-
         foreach ($fields as $field) {
             // Test the field is castable
             if (isset($field['name']) && is_string($field['name']) && array_key_exists($field['name'], $casted_attributes)) {
@@ -450,7 +451,7 @@ trait Fields
      */
     public function fieldTypeNotLoaded($field)
     {
-        
+
         return ! in_array($this->getFieldTypeWithNamespace($field), $this->getLoadedFieldTypes());
     }
 

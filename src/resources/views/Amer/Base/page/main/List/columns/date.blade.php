@@ -4,7 +4,13 @@
     $column['escaped'] = $column['escaped'] ?? true;
     $column['prefix'] = $column['prefix'] ?? '';
     $column['suffix'] = $column['suffix'] ?? '';
-    $column['format'] = $column['format'] ?? config('backpack.base.default_date_format');
+    if(!isset($column['format'])){
+        $column['format'] =config('Amer.Amer.default_date_format');
+    }else{
+        if($column['format'] === null){
+            $column['format'] = config('Amer.Amer.default_date_format');
+        }
+    }
     $column['text'] = $column['default'] ?? '-';
 
     if($column['value'] instanceof \Closure) {

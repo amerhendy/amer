@@ -19,6 +19,11 @@
 <label for="{{ $field['name'] }}" class="form-label">{!! $field['label'] ?? '' !!}</label>
 @include(fieldview('inc.translatable_icon'))
 </div>
+<?php
+foreach ($options as $connected_entity_entry){
+    //dd($current_value);
+}
+?>
         <select
             name="{{ $field['name'] }}" id="{{ $field['name'] }}"
             @include(fieldview('inc.attributes'))
@@ -37,6 +42,6 @@
             @endif
         </select>
         @if (isset($field['hint']))
-        <p class="help-block">{!! $field['hint'] !!}</p>
+        <small class="form-text text-muted">{!! $field['hint'] ?? '' !!}</small>
     @endif
 @include(fieldview('inc.wrapper_end'))

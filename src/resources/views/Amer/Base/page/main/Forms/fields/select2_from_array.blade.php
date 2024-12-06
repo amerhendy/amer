@@ -16,13 +16,13 @@
         name="{{ $field['name'] }}@if (isset($field['allows_multiple']) && $field['allows_multiple']==true)[]@endif"
         id="{{ $field['name'] }}"
         style="width: 100%"
+        data-placeholder="{!! $field['placeholder'] ?? $field['label'] !!}";
         data-init-function="bpFieldInitSelect2FromArrayElement"
         data-field-is-inline="{{var_export($inlineCreate ?? false)}}"
         data-language="{{ str_replace('_', '-', app()->getLocale()) }}"
         @include(fieldview('inc.attributes'), ['default_class' =>  'form-control select2_from_array'])
         @if (isset($field['allows_multiple']) && $field['allows_multiple']==true)multiple @endif
         >
-
         @if ($field['allows_null'])
             <option value="">-</option>
         @endif
@@ -57,7 +57,7 @@
     </select>
 
     @if (isset($field['hint']))
-        <p class="help-block">{!! $field['hint'] !!}</p>
+        <small class="form-text text-muted">{!! $field['hint'] ?? '' !!}</small>
     @endif
 @include(fieldview('inc.wrapper_end'))
     @push('after_styles')
@@ -70,17 +70,21 @@
     @if (app()->getLocale() !== 'en')
     @loadScriptOnce('js/packages/select2/dist/js/i18n/' . str_replace('_', '-', app()->getLocale()) . '.js')
     @endif
+
+    @loadScriptOnce('js/Amer/forms/select2.js')
     @loadOnce('bpFieldInitSelect2FromArrayElement')
     <script>
         function bpFieldInitSelect2FromArrayElement(element) {
             if (!element.hasClass("select2-hidden-accessible"))
                 {
+                    var uniqueid=$(element).attr('uniqueid');
+                    registerSelect2WantedData(uniqueid);
                     let $isFieldInline = element.data('field-is-inline');
+                    select2f=setSelect2Info($(element).attr('uniqueid'));
 
-                    element.select2({
-                        theme: "bootstrap-5",
-                        dropdownParent: $isFieldInline ? $('#inline-create-dialog .modal-content') : document.body
-                    }).on('select2:unselect', function(e) {
+
+                    element.select2(select2f)
+                    .on('select2:unselect', function(e) {
                         if ($(this).attr('multiple') && $(this).val().length == 0) {
                             $(this).val(null).trigger('change');
                         }

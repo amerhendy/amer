@@ -1,4 +1,4 @@
-
+<!--fetch.blade-->
 @php
 if($field['name'] == 'Experience_id'){
 
@@ -9,7 +9,7 @@ if($field['name'] == 'Experience_id'){
 
     $field['multiple'] = $field['multiple'] ?? $crud->guessIfFieldHasMultipleFromRelationType($field['relation_type']);
     $field['data_source'] = Route($field['data_source']);
-    
+
     $field['attribute'] = $field['attribute'] ?? $connected_entity->identifiableAttribute();
     $field['placeholder'] = $field['placeholder'] ?? ($field['multiple'] ? trans('backpack::crud.select_entries') : trans('backpack::crud.select_entry'));
     $field['include_all_form_fields'] = $field['include_all_form_fields'] ?? true;
@@ -24,8 +24,8 @@ if($field['name'] == 'Experience_id'){
     // and format it to JSON, so that select2 can parse it
     $current_value = old(square_brackets_to_dots($field['name'])) ?? $field['value'] ?? $field['default'] ?? '';
     if (!empty($current_value) || is_int($current_value)) {
-        
-        
+
+
         switch (gettype($current_value)) {
             case 'array':
                 $current_value = $connected_entity
@@ -46,7 +46,7 @@ if($field['name'] == 'Experience_id'){
                     $current_value = [$current_value->{$connected_entity_key_name} => $current_value->{$field['attribute']}];
                 }else{
                     if(! $current_value->isEmpty())  {
-                        
+
                         if(is_array($field['attribute'])){
                             $newCurrentca=$current_value->toArray(); unset($current_value);$current_value=[];
                             foreach($newCurrentca as $a=>$item){
@@ -71,22 +71,22 @@ if($field['name'] == 'Experience_id'){
                                             $resulta=[];
                                             foreach($field['attribute'] as $a=>$b){
                                                 if(isset($item[$b])){$resulta[]=$item[$b];}
-                                                
+
                                             }
                                             $current_value[$item['id']]=implode($field['attribute-break'],$resulta);
-                                        
+
                                     }
                                 }
 
                             }
-                            
+
                             //dd($current_value);
                         }else{
                             $current_value = $current_value
                                                 ->pluck($field['attribute'], $connected_entity_key_name)
                                                 ->toArray();
                         }
-                    
+
                     }
                 }
                 break;
@@ -320,7 +320,7 @@ if($field['name'] == 'Experience_id'){
                         $dependencies.forEach((item,key)=>{
                             sentdata['dependencies'][key]={'field':item,'val':form.find('[name="'+item+'"], [name="'+item+'[]"]').val()}
                         });
-                        
+
                         return sentdata;
                     },
                     processResults: function (data, params) {
@@ -374,7 +374,7 @@ if($field['name'] == 'Experience_id'){
                     cache: true
                 },
             };
-            
+
         if (!$(element).hasClass("select2-hidden-accessible"))
         {
             $(element).select2($select2Settings);
@@ -419,8 +419,9 @@ if($field['name'] == 'Experience_id'){
             return typeof $itemField === 'object' && $itemField !== null
                 ? $itemField[$appLang] ? $itemField[$appLang] : $itemField[$appLangFallback] ? $itemField[$appLangFallback] : Object.values($itemField)[0] ? Object.values($itemField)[0] : $emptyTranslation
                 : $itemField;
-                
+
         }
     }
 </script>
 @endpush
+<!--fetch.blade-->

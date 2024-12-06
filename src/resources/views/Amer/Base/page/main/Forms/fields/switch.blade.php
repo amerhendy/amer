@@ -38,7 +38,7 @@
     <label class="d-inline-flex m-0">&nbsp;</label>
 
     @if (isset($field['hint']))
-        <p class="help-block">{!! $field['hint'] !!}</p>
+        <small class="form-text text-muted">{!! $field['hint'] ?? '' !!}</small>
     @endif
 @include(fieldview('inc.wrapper_end'))
 @push('after_scripts')

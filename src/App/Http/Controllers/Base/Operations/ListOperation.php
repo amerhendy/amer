@@ -16,8 +16,7 @@ trait ListOperation
             'uses'      => $controller.'@search',
             'operation' => 'list',
         ]);
-
-        Route::get($segment.'/{id}/details', [
+        Route::post($segment.'/{id}/details', [
             'as'        => $routeName.'.showDetailsRow',
             'uses'      => $controller.'@showDetailsRow',
             'operation' => 'list',
@@ -30,9 +29,9 @@ trait ListOperation
         $this->Amer->operation('list', function () {
             $this->Amer->loadDefaultOperationSettingsFromConfig();
         });
-    
+
     }
-    
+
     /**
      * Display all rows in the database for this entity.
      *
@@ -48,14 +47,13 @@ trait ListOperation
     }
     public function search()
     {
+        //dd(request());
         $this->Amer->hasAccessOrFail('list');
-
         $this->Amer->applyUnappliedFilters();
-
         $start = (int) request()->input('start');
         $length = (int) request()->input('length');
         $search = request()->input('search');
-
+        if($length === 0){$length=$this->Amer->getDefaultPageLength();}
         // if a search term was present
         if ($search && $search['value'] ?? false) {
             // filter the results accordingly

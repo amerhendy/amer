@@ -5,7 +5,7 @@
     <div class="row">
       <!--Grid column-->
       <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-        <h5 class="text-uppercase">{{config('amer.co_name') ?? 'HCWW'}}</h5>
+        <h5 class="text-uppercase">{{config('Amer.Amer.co_name') ?? 'HCWW'}}</h5>
       </div>
       <!--Grid column-->
 
@@ -19,15 +19,15 @@
             <a onclick="popitup('{{url('api')}}/QRCODE/{{$current_url}}','qrcode');" class="white-text">QRCODE</a>
           </li>
           <li>
-            <a href="{{config('amer.socialmedia.facebook.link') ?? url('')}}" class="white-text">
+            <a href="{{config('Amer.Amer.socialmedia.facebook.link') ?? url('')}}" class="white-text">
                                     FaceBook
                                 </a>
           </li>
           <li>
-            <a href="mailto:{{config('amer.socialmedia.email.link') ?? url('')}}" class="">E-mail</a>
+            <a href="mailto:{{config('Amer.Amer.socialmedia.email.link') ?? url('')}}" class="">E-mail</a>
           </li>
           <li>
-            <a href="tel:{{config('amer.socialmedia.fax.link') ?? url('')}}" class="">Fax</a>
+            <a href="tel:{{config('Amer.Amer.socialmedia.fax.link') ?? url('')}}" class="">Fax</a>
           </li>
         </ul>
       </div>
@@ -59,7 +59,7 @@
             <a href="https://www.hcww.com.eg/bill-calc/" class="">احسب فاتورتك</a>
           </li>
           <li>
-            <a href="{{config('amer.socialmedia.fawrylink.link') ?? url('')}}" class="">دفع الفواتير - فورى</a>
+            <a href="{{config('Amer.Amer.socialmedia.fawrylink.link') ?? url('')}}" class="">دفع الفواتير - فورى</a>
           </li>
         </ul>
       </div>
@@ -73,7 +73,7 @@
             <div class="col">
                 <div class='text-center p-3'>
                     ©2009- {{date('Y')}} Copyright:
-                    <a href="{{url('')}}">{{config('amer.co_name') ?? 'NSSCWW'}}</a>
+                    <a href="{{url('')}}">{{config('Amer.Amer.co_name') ?? 'NSSCWW'}}</a>
                 </div>
             </div>
         </div>

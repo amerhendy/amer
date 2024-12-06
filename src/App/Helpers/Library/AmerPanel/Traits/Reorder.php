@@ -12,15 +12,15 @@ trait Reorder
      * @param  array  $request  The entire request from the NestedSortable AJAX Call.
      * @return int The number of items whose position in the tree has been changed.
      */
-    public static function updateTreeOrder($request)
+    public function updateTreeOrder($request)
     {
         $count = 0;
-        $primaryKey = self::model->getKeyName();
+        $primaryKey = $this->model->getKeyName();
 
         \DB::beginTransaction();
         foreach ($request as $key => $entry) {
             if ($entry['item_id'] != '' && $entry['item_id'] != null) {
-                $item = self::model->where($primaryKey, $entry['item_id'])->update([
+                $item = $this->model->where($primaryKey, $entry['item_id'])->update([
                     'parent_id' => empty($entry['parent_id']) ? null : $entry['parent_id'],
                     'depth'     => empty($entry['depth']) ? null : $entry['depth'],
                     'lft'       => empty($entry['left']) ? null : $entry['left'],
@@ -37,24 +37,24 @@ trait Reorder
 
     /**
      * Enable the Reorder functionality in the Amer Panel for users that have the been given access to 'reorder' using:
-     * self::Amer->allowAccess('reorder');.
+     * $this->Amer->allowAccess('reorder');.
      *
      * @param  string  $label  Column name that will be shown on the labels.
      * @param  int  $max_level  Maximum hierarchy level to which the elements can be nested (1 = no nesting, just reordering).
      */
-    public static function enableReorder($label = 'name', $max_level = 1)
+    public function enableReorder($label = 'name', $max_level = 1)
     {
-        self::setOperationSetting('enabled', true);
-        self::setOperationSetting('label', $label);
-        self::setOperationSetting('max_level', $max_level);
+        $this->setOperationSetting('enabled', true);
+        $this->setOperationSetting('label', $label);
+        $this->setOperationSetting('max_level', $max_level);
     }
 
     /**
      * Disable the Reorder functionality in the Amer Panel for all users.
      */
-    public static function disableReorder()
+    public function disableReorder()
     {
-        self::setOperationSetting('enabled', false);
+        $this->setOperationSetting('enabled', false);
     }
 
     /**
@@ -62,8 +62,8 @@ trait Reorder
      *
      * @return bool
      */
-    public static function isReorderEnabled()
+    public function isReorderEnabled()
     {
-        return self::getOperationSetting('enabled');
+        return $this->getOperationSetting('enabled');
     }
 }

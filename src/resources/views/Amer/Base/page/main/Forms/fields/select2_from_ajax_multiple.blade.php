@@ -39,7 +39,7 @@ $model=$model[count($model)-1];
         data-language="{{ str_replace('_', '-', app()->getLocale()) }}"
         @include(fieldview('inc.attributes'), ['default_class' =>  'form-control'])
         multiple>
-        
+
         @if ($old_value)
             @foreach ($old_value as $item)
                 @if (!is_object($item))
@@ -54,7 +54,7 @@ $model=$model[count($model)-1];
         @endif
     </select>
         @if (isset($field['hint']))
-        <p class="help-block">{!! $field['hint'] !!}</p>
+        <small class="form-text text-muted">{!! $field['hint'] ?? '' !!}</small>
     @endif
 @include(fieldview('inc.wrapper_end'))
     @push('after_styles')
@@ -84,146 +84,57 @@ $model=$model[count($model)-1];
         var $isFieldInline = element.data('field-is-inline');
         var $model=element.attr('data-model');
 
-        var select2AjaxMultipleFetchSelectedEntries = function (element) {
-            return new Promise(function (resolve, reject) {
-                $.ajax({
-                    url: $dataSource,
-                    data: {
-                        'keys': $selectedOptions
-                    },
-                    type: $method,
-                    success: function (result) {
-
-                        resolve(result);
-                    },
-                    error: function (result) {
-                        reject(result);
-                    }
-                });
-            });
-        };
+        var select2AjaxMultipleFetchSelectedEntries = setPromiseSelect2($(element).attr('uniqueid'));
 
         if (!$(element).hasClass("select2-hidden-accessible"))
-        {////////////////////////////
-var SELECT_ALL_LIMIT = 70;
-$.fn.select2.amd.define('select2/selectAllAdapter', [
-  'select2/utils',
-  'select2/dropdown',
-  'select2/dropdown/attachBody'
-], function(Utils, Dropdown, AttachBody) {
-  function SelectAll() {}
-
-  SelectAll.prototype.render = function(decorated) {
-    var $rendered = decorated.call(this);
-    var self = this;
-
-    var $selectAll = $('<button class="btn btn-xs btn-default btn-outline-secondary select_all" style="width:100%;margin-top: 5px;" type="button">{{trans("AMER::actions.selectall")}}</button>');
-
-    var checkOptionsCount = function() {
-      var count = $('.select2-results__option').length;
-      $selectAll.text('{{trans("AMER::actions.selectall")}} (' + count + ')');
-      $selectAll.prop('disabled', count > SELECT_ALL_LIMIT);
-    }
-
-
-    var $container = $('.select2-container');
-    $container.bind('keyup click', checkOptionsCount);
-
-    var $dropdown = $rendered.find('.select2-dropdown')
-    $dropdown.prepend($selectAll);
-    $selectAll.on('click', function(e) {
-      var $results = $rendered.find('.select2-results__option[aria-selected=false]');
-
-      // Get all results that aren't selected
-      $results.each(function() {
-        var $result = $(this);
-        var $div=$result.children();
-        var $id=$($div).data('id');
-        var $text=$($div).text();
-        var data={id:$id,text:$text};
-
-        // Trigger the select event
-        self.trigger('select', {
-          data: data
-        }); // <-- TypeError, data is undefined
-      });
-
-      self.trigger('close');
-    });
-    return $rendered;
-  };
-
-  return Utils.Decorate(
-    Utils.Decorate(
-      Dropdown,
-      AttachBody
-    ),
-    SelectAll
-  );
-})
+        {
 var formatter = new RepositoryFormatter()
 /////////////////////////////////
+            select2f=setSelect2Info($(element).attr('uniqueid'));
+            select2f['ajax']=setSelect2BasicAjax($(element).attr('uniqueid'));
+            select2f['ajax']['data']=function (params) {
+                var sentdata={q: params.term,page: params.page,};
+                if ($includeAllFormFields) {sentdata.form=form.serializeArray()}else{}
+                if(exists($dependencies)){
+                    $($dependencies).each(function(index,value){
+                        val=form.find('[name="'+value+'"], [name="'+value+'[]"]').val()
+                        homemodel=form.find('[name="'+value+'"], [name="'+value+'[]"]').attr('data-model');
+                        wanted=$model;
+                        sentdata.dependencies={homemodel,wanted,val,attributes:$fieldAttribute}
+                    });
+                }
 
-            $(element).select2({
-                theme: 'bootstrap-5',
-                multiple: true,
-                placeholder: $placeholder,
-                minimumInputLength: $minimumInputLength,
-                dropdownParent: $isFieldInline ? $('#inline-create-dialog .modal-content') : document.body,
-                
-                templateResult: formatRepo,
-                templateSelection:formatRepoSelection,
-                dropdownAdapter: $.fn.select2.amd.require('select2/selectAllAdapter'),
-                ajax: {
-                    url: $dataSource,
-                    type: $method,
-                    dataType: 'json',
-                    delay: $ajaxDelay,
-                    data: function (params) {
-                        var sentdata={q: params.term,page: params.page,};
-                        if ($includeAllFormFields) {sentdata.form=form.serializeArray()}else{}
-                        if(exists($dependencies)){
-                            $($dependencies).each(function(index,value){
-                                val=form.find('[name="'+value+'"], [name="'+value+'[]"]').val()
-                                homemodel=form.find('[name="'+value+'"], [name="'+value+'[]"]').attr('data-model');
-                                wanted=$model;
-                                sentdata.dependencies={homemodel,wanted,val,attributes:$fieldAttribute}
+                return sentdata;
+            };
+            select2f['ajax']['processResults']=function (data, params) {
+                params.page = params.page || 1;
+                return {
+                    results: $.map(data.data, function (item) {
+                        if(IsValidJSONString($fieldAttribute)){
+                            parsed = JSON.parse($fieldAttribute);
+                            parsed.forEach((item)=>{
+                                datype=typeof(item);
+                                if(datype === 'object'){
+                                    newfieldAttribute=Object.keys(item);
+                                }
+                                if(datype === 'string'){
+                                    newfieldAttribute=item;
+                                }
                             });
                         }
-                        
-                        return sentdata;
-                    },
-                    processResults: function (data, params) {
-                        params.page = params.page || 1;
+                        //$fieldAttribute=JSON.parse($fieldAttribute);
+                        //dd($connectedEntityKeyName);
                         return {
-                            results: $.map(data.data, function (item) {
-                                if(IsValidJSONString($fieldAttribute)){
-                                    parsed = JSON.parse($fieldAttribute);
-                                    parsed.forEach((item)=>{
-                                        datype=typeof(item);
-                                        if(datype === 'object'){
-                                            newfieldAttribute=Object.keys(item);
-                                        }
-                                        if(datype === 'string'){
-                                            newfieldAttribute=item;
-                                        }
-                                    });
-                                }
-                                //$fieldAttribute=JSON.parse($fieldAttribute);
-                                //dd($connectedEntityKeyName);
-                                return {
-                                    text: item[newfieldAttribute],
-                                    id: item.id
-                                }
-                            }),
-                            pagination: {
-                                 more: data.current_page < data.last_page
-                            }
-                        };
-                    },
-                    cache: true
-                },
-            });
+                            text: item[newfieldAttribute],
+                            id: item.id
+                        }
+                    }),
+                    pagination: {
+                            more: data.current_page < data.last_page
+                    }
+                };
+            };
+            $(element).select2(select2f);
         }
         function RepositoryFormatter() {}
 function formatRepo(repo) {

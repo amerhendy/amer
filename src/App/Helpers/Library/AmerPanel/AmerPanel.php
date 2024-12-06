@@ -147,7 +147,7 @@ class AmerPanel
     /**
      * Check if the database connection driver is using mongodb.
      *
-     
+
      *
      * @deprecated
      *
@@ -193,19 +193,25 @@ class AmerPanel
         $currentrouteName=\Illuminate\Support\Facades\Route::currentRouteName();
         $routes=\Illuminate\Support\Facades\Route::getRoutes();
         $routelist=[];
+        //Amerhendy\Amer\App\Http\Controllers\qrcode@index
+        foreach($routes as $a=>$b){
+            if($b->getActionName()!=='Closure'){
+
+            }else{
+                $b->action['as']=null;
+                $controller='';
+            }
+        }
         foreach($routes as $a=>$b){
             //print_r($b->getAction());
             if($b->getActionName()!=='Closure'){
-                $controller=$b->getController();
+                //$controller=$b->getController();
             }else{
-                $controller='';
-            }
-            if(!isset($b->action['as'])){
                 $b->action['as']=null;
             }
             $routelist[]=[
                 'methods'=>$b->methods,
-                'as'=>$b->action['as'],
+                'as'=>$b->action['as'] ?? null,
                 'uri'=>$b->uri,
                 'actionMethod'=>$b->getActionMethod(),
             ];
@@ -242,7 +248,7 @@ class AmerPanel
                 'actionMethod'=>$b->getActionMethod(),
             ];
         }
-        
+
         $currentrouteName=Str::beforeLast($currentrouteName,'.');
         if(Str::contains($currentrouteName,'.')){
             $currentrouteName=Str::afterLast($currentrouteName,'.');

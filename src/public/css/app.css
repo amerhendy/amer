@@ -1,20 +1,28 @@
 @charset "utf-8";
+@import "Amer/roots.css";
+@import "Amer/forms.css";
+@import "Amer/colors.css";
+@import "Amer/preloaders.css";
+@import "Amer/printpagescreen.css";
+@import "packages/jquery/jquery-ui-1.10.0.custom.min.css";
+@import "packages/awesom/all.min.css";
+@import "packages/awesom/brands.min.css";
+@import "packages/awesom/fontawesome.min.css";
+@import "packages/awesom/regular.min.css";
+@import "packages/awesom/solid.min.css";
+@import "packages/awesom/svg-with-js.min.css";
+@import "packages/awesom/v5-font-face.min.css";
+@import "packages/awesom/v4-shims.min.css";
+@import "packages/bootstrap/bootstrap.min.css";
+@import "packages/bootstrap/bootstrap.rtl.min.css";
+@import "packages/bootstrap/bootstrap-grid.min.css";
+@import "packages/bootstrap/bootstrap-grid.rtl.min.css";
+@import "packages/bootstrap/bootstrap-reboot.min.css";
+@import "packages/bootstrap/bootstrap-reboot.rtl.min.css";
+@import "packages/bootstrap/bootstrap-utilities.min.css";
+@import "packages/bootstrap/bootstrap-utilities.rtl.min.css";
+
 /* CSS Document */
-:root{
-    
-}
-:root,
-[data-bs-theme=dark] {
-    --bs-graidnet:450deg;
-    --color-p:#2096cd;
-    --color-a:#333;
-}
-:root,
-[data-bs-theme=light] {
-    --bs-graidnet:45deg;
-    --color-p:#ff6ec4;
-    --color-a:#7873f5;
-}
 .breakingNews{width:100%; height:40px; background:#FFF; position:relative; border:solid 2px #2096cd; overflow:hidden;}
 .breakingNews>.bn-title{width:auto; height:40px; display:inline-block; background:#2096cd; position:relative;}
 .breakingNews>.bn-title>h2{display:inline-block; margin:0; padding:0 20px; line-height:40px; font-size:20px; color:#FFF; height:40px; box-sizing:border-box;}
@@ -95,16 +103,19 @@ html, body {
 }
 .headers,#headers,.searchbutton{    background-color: #0a384f;
 }
-[data-bs-theme="light"]{
-    --menubackground-rgb:249, 249, 249;
-    --menutextcolor-rgb:10, 56, 79;
-}
-[data-bs-theme="dark"]{
-    --menubackground-rgb:10, 56, 79;
-    --menutextcolor-rgb:255,255,255;
-}
+.menue{}
 .menu-area{
-    background: rgba(var(--menubackground-rgb));
+    /*
+    --bs-graidnet:450deg;
+        --color-p:#2096cd;
+        --color-a:#333;
+        
+        */
+    background: rgb(2,0,36);
+    background: linear-gradient(450deg, 
+    var(--color-p) 36%,
+    var(--color-a) 100%);
+    color: rgba(var(--menutextcolor-rgb));
     
 }
 .breadcrumb-item.active{
@@ -192,39 +203,6 @@ html, body {
     z-index: 9999;
     overflow: hidden;
     background: #151515;
-}
-
-#preloader:before {
-    content: "";
-    position: fixed;
-    top: calc(50% - 0px);
-    left: calc(50% - 30px);
-    border: 6px solid #ffc451;
-    border-top-color: #151515;
-    border-bottom-color: #151515;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    -webkit-animation: animate-preloader 1s linear infinite;
-    animation: animate-preloader 1s linear infinite;
-}
-
-@-webkit-keyframes animate-preloader {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes animate-preloader {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
 }
 
 /*--------------------------------------------------------------
@@ -317,16 +295,4 @@ section {
     width: 200px;
     text-align: center;
     color: #fff;
-  }
-  .purple-gradient {
-    background: linear-gradient(var(--bs-graidnet),var(--color-p),var(--color-a)) !important;
-  }
-  .blue-gradient {
-    background: linear-gradient(var(--bs-graidnet),#45cafc,#303f9f) !important;
-  }
-  .aqua-gradient {
-    background: linear-gradient(var(--bs-graidnet),#2096ff,#05ffa3) !important;
-  }
-  .peach-gradient {
-    background: linear-gradient(var(--bs-graidnet),#ffd86f,#fc6262) !important;
   }

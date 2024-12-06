@@ -2,17 +2,17 @@
         <div class="row">
           <div class="col-sm-3 border border-light">{!! $column['label'] !!}</div>
           <div class="col-sm border border-light">
-            
+
             @if(!isset($column['type']))
-              @include(Baseview('columns.text'))
+              @include(listview('columns.text'))
             @else
-              @if(!view()->exists(Baseview('columns.'.$column['type'])))
-                @include(Baseview('columns.text'))
+              @if(!view()->exists(listview('columns.'.$column['type'])))
+                @include(listview('columns.text'))
               @else
-                @include(Baseview('columns.'.$column['type']))
+                @include(listview('columns.'.$column['type']))
               @endif
             @endif
           </div>
         </div>
-        
+
         @endforeach

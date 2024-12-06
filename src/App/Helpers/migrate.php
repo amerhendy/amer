@@ -6,6 +6,163 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use amerhendy\Amer\App\Helpers\AmerHelper;
 class migrate extends Migration{
+    public $maintables=[
+        [//,'nullable','unique','from'=>100
+            'Employment_Driver'=>['Text'=>['string','unique']],//checked
+            'Employment_Ama'=>['Text'=>['string','unique']],//checked
+            'Employment_Arm'=>['Text'=>['string','unique']],//checked
+            'Employment_Education'=>['Text'=>['string','unique']],//checked
+            'Employment_FunctionalClass'=>['Text'=>['string','unique']],//checked
+            'Employment_Health'=>['Father'=>['unsignedInteger','nullable'],'Text'=>['string','unique'],],//checked
+            'Employment_Annonce'=>[
+                'Annonce_id'=>['foreignId'=>'Employment_StartAnnonces'],
+                'Text'=>['longText'],'Statue'=>['enum'=>['Published','Draft']],],
+            'Employment_IncludedFiles'=>['Text'=>['string'],'Checked'=>['enum'=>[0,1,2]],],
+            'Employment_Instructions'=>['Text'=>['string'],],
+            'Employment_Job'=>[
+                'Annonce_id'=>['foreignId'],
+                'Code'=>['char'=>[10],'nullable'],'Name'=>['string','nullable'],'JobName'=>['string','nullable'],'JobDescription'=>['string','nullable'],
+                'Slug'=>['string','unique'],'Functional_id'=>['foreignId'],'Count'=>['unsignedInteger','default'=>0],'AgeIn'=>['date'],'Age'=>['unsignedInteger','default'=>35],
+                'Experince'=>['unsignedInteger','default'=>0],'Driver'=>['enum'=>[0,1],'default'=>1],'Statue'=>['enum'=>['Published', 'Draft']],
+            ],
+            'Employment_Mir'=>['Father'=>['unsignedInteger','nullable','default'=>0],'Text'=>['string'],],
+            'Employment_PagesDinamic'=>['Name'=>['string'],'Control'=>['string'],'Function'=>['string'],],
+            'Employment_PagesStatic'=>['Title'=>['string'],'Content'=>['longText'],'Data'=>['longText','nullable'],],
+            'Employment_People'=>[
+                'Annonce_id'=>['foreignId'],
+                'Stage_id'=>['foreignId'],
+                'Job_id'=>['foreignId'],
+                'Nid'=>['unsignedBigInteger'],
+                'Sex'=>['enum'=>[0,1]],
+                'BirthDate'=>['date'],
+                'AgeYears'=>['unsignedInteger','nullable'],
+                'AgeMonths'=>['unsignedInteger','nullable'],
+                'AgeDays'=>['unsignedInteger','nullable'],
+                'FName'=>['string'],
+                'SName'=>['string'],
+                'TName'=>['string'],
+                'LName'=>['string'],
+                'BornGov'=>['foreignId'],
+                'BornCity'=>['foreignId'],
+                'LiveGov'=>['foreignId'],
+                'LiveCity'=>['foreignId'],
+                'LiveAddress'=>['string','nullable'],'LandLine'=>['string','nullable'],'Mobile'=>['string','nullable'],'Email'=>['string','nullable'],
+                'Health_id'=>['foreignId','nullable'],
+                'Mir_id'=>['foreignId','nullable'],
+                'Arm_id'=>['foreignId','nullable'],
+                'Ama_id'=>['foreignId','nullable'],
+                'Education_id'=>['foreignId','nullable'],
+                'EducationYear'=>['string','nullable'],'Experince'=>['unsignedInteger','default'=>0],'InsuranceNumber'=>['unsignedInteger','nullable','default'=>0],'FileName'=>['string'],
+                'DriverDegree_id'=>['foreignId','nullable'],'DriverStart'=>['date','nullable'],'DriverEnd'=>['date','nullable'],'Result'=>['longText','nullable'],'Message'=>['longText','nullable'],
+            ],
+            'Employment_PeopleNewData'=>[
+                'Uid'=>['foreignId'],
+                'Stage_id'=>['foreignId'],
+                'Job_id'=>['foreignId','nullable'],
+                'FName'=>['string'],
+                'SName'=>['string'],
+                'TName'=>['string'],
+                'LName'=>['string'],
+                'BornGov'=>['foreignId'],
+                'BornCity'=>['foreignId'],
+                'LiveGov'=>['foreignId'],
+                'LiveCity'=>['foreignId'],
+                'LiveAddress'=>['string','nullable'],
+                'LandLLine'=>['string','nullable'],
+                'Mobile'=>['string','nullable'],
+                'Email'=>['string','nullable'],
+                'Health_id'=>['foreignId','nullable'],
+                'Mir_id'=>['foreignId','nullable'],
+                'Arm_id'=>['foreignId','nullable'],
+                'Ama_id'=>['foreignId','nullable'],
+                'Education_id'=>['foreignId','nullable'],
+                'EducationYear'=>['string','nullable'],
+                'Experince'=>['unsignedInteger','nullable'],
+                'InsuranceNumber'=>['unsignedInteger','nullable'],
+                'FileName'=>['string','nullable'],
+                'DriverDegree_id'=>['foreignId','nullable'],
+                'DriverStart'=>['date','nullable'],
+                'DriverEnd'=>['date','nullable'],
+                'Result'=>['longText','nullable'],
+                'Statue'=>['enum'=>[1,2],'nullable'],
+            ],
+            'Employment_PeopleDegree'=>[
+                'Uid'=>['foreignId','unique'],
+                'Written'=>['float','nullable'],
+                'Practical'=>['float','nullable'],
+                'Interview'=>['float','nullable'],
+            ],
+            'Employment_PeopleNewStage'=>[
+                'Uid'=>['foreignId'],
+                'NewStatue'=>['foreignId'],
+                'NewMessage'=>['longText','nullable'],
+                'Stage_id'=>['foreignId'],
+            ],
+            'Employment_Places'=>[
+                'Text'=>['string'],
+            ],
+            'Employment_Qualifications'=>[
+                'Type'=>['enum'=>['Private','Public']],
+                'Text'=>['string'],
+            ],
+            'Employment_Stages'=>[
+                'Title'=>['string'],
+                'Days'=>['unsignedInteger','nullable'],
+                'Page'=>['string'],
+                'Front'=>['enum'=>[0,1]],
+            ],
+            'Employment_Status'=>[
+                'Text'=>['string','unique'],
+            ],
+            'Governorates'=>[
+                'Name'=>['string','unique'],
+                'English'=>['string','unique'],
+            ],
+            'Employment_ApplyLog'=>[
+                'userData'=>['jsonb'],
+            ],
+            'Employment_StartAnnonces'=>[
+                'Number'=>['unsignedInteger'],
+                'Year'=>['unsignedInteger'],
+                'Description'=>['longText'],
+                'Stage_id'=>['foreignId'],
+                'Slug'=>['string','unique'],
+                'Statue'=>['enum'=>['Published','Draft']],
+            ],
+            'Cities'=>[
+                'Gov_id'=>['foreignId'],
+                'Name'=>['string'],
+                'English'=>['string'],
+            ],
+            'Employment_Grievance'=>[
+                'Uid'=>['foreignId'],
+                'Stage_id'=>['foreignId']
+            ],
+            'employment_Job_Ama'=>[
+                'Job_id'=>['foreignId'],
+                'Ama_id'=>['foreignId']
+            ],
+            'employment_Job_Arm'=>[
+                'Job_id'=>['foreignId'],
+                'Arm_id'=>['foreignId']
+            ],
+            'employment_Job_City'=>[
+                'Job_id'=>['foreignId'],
+                'City_id'=>['foreignId']
+            ],
+            'employment_Job_Driver'=>['Job_id'=>['foreignId'],'Driver_id'=>['foreignId']],
+            'employment_Job_Education'=>['Job_id'=>['foreignId'],'Education_id'=>['foreignId']],
+            'employment_Job_Health'=>['Job_id'=>['foreignId'],'Health_id'=>['foreignId']],
+            'employment_Job_IncludedFiles'=>['Job_id'=>['foreignId'],'IncludedFiles_id'=>['foreignId']],
+            'employment_Job_Instructions'=>['Job_id'=>['foreignId'],'Instructions_id'=>['foreignId']],
+            'employment_Job_Mir'=>['Job_id'=>['foreignId'],'Mir_id'=>['foreignId']],
+            'employment_Job_Places'=>['Job_id'=>['foreignId'],'Place_id'=>['foreignId'],'Count'=>['unsignedInteger']],
+            'employment_Job_Qualifications'=>['Job_id'=>['foreignId'],'Qualifications_id'=>['foreignId']],
+            'employment_startannonces_Qualifications'=>['Annonce_id'=>['foreignId'],'Qualification_id'=>['foreignId']],
+            'employment_startannonces_Governorates'=>['Annonce_id'=>['foreignId'],'Governorate_id'=>['foreignId']],
+
+            ]
+    ];
     public $indexedcols=[
                 'bigIncrements','mediumIncrements','smallIncrements','tinyIncrements','foreignId','foreignIdFor','foreignUlid','foreignUuid',
                 'id','increments','ulid','uuid',
@@ -173,7 +330,7 @@ class migrate extends Migration{
                     //$table->autoIncrement();
                 }
             }else{
-                
+
             }
         }
         if(in_array('nullable',$d)){if($columntype == 'dateTimeTz'){
@@ -191,7 +348,7 @@ class migrate extends Migration{
                     if(!isset($d['decimal']['scale'])){$scale=2;}else{$scale=$d['decimal']['scale'];}
                 }
                 $table->decimal($columnname, $precision, $scale);
-                
+
             }elseif($columntype == 'double'){
                 if(in_array('double',$d)){$precision=8;$scale=2;}
                 if(array_key_exists('double',$d)){
@@ -207,11 +364,11 @@ class migrate extends Migration{
                 }
                 $table->double($columnname, $precision, $scale);
             }elseif($columntype == 'enum'){
-                
+
             }else{
                     $table->$columntype($columnname)->nullable();
             }
-            
+
         }
         if(array_key_exists('default',$d)){
             if($columntype == 'enum'){
@@ -231,9 +388,9 @@ class migrate extends Migration{
         if(array_key_exists('charset',$d)){$table->charset($d['charset'][0]);}
         if(array_key_exists('collation',$d)){$table->collation($d['collation'][0]);}
         if(array_key_exists('comment',$d)){$table->comment($d['comment'][0]);}
-        
+
         if(array_key_exists('from',$d)){$table->from($d['from']);}
-        
+
         if(array_key_exists('storedAs',$d)){$table->storedAs($d['storedAs'][0]);}
         if(array_key_exists('virtualAs',$d)){$table->virtualAs($d['virtualAs'][0]);}
         if(array_key_exists('generatedAs',$d)){$table->generatedAs($d['generatedAs'][0]);}
@@ -266,7 +423,7 @@ class migrate extends Migration{
                     });
                     //dd($vos[0]);
                     if(!count($vos)){dd("Error : please assign the class ".$class." for column type $columntype in App/models/");}
-                    
+
                     return $table->$columntype($vos[0]['callLink']);
                     //return $table->foreignIdFor("\\App\\Models\\User");
                 }
@@ -310,160 +467,3 @@ class migrate extends Migration{
 
 
 
-public $maintables=[
-    [//,'nullable','unique','from'=>100
-        'Employment_Driver'=>['Text'=>['string','unique']],//checked
-        'Employment_Ama'=>['Text'=>['string','unique']],//checked
-        'Employment_Arm'=>['Text'=>['string','unique']],//checked
-        'Employment_Education'=>['Text'=>['string','unique']],//checked
-        'Employment_FunctionalClass'=>['Text'=>['string','unique']],//checked
-        'Employment_Health'=>['Father'=>['unsignedInteger','nullable'],'Text'=>['string','unique'],],//checked
-        'Employment_Annonce'=>[
-            'Annonce_id'=>['foreignId'=>'Employment_StartAnnonces'],
-            'Text'=>['longText'],'Statue'=>['enum'=>['Published','Draft']],],
-        'Employment_IncludedFiles'=>['Text'=>['string'],'Checked'=>['enum'=>[0,1,2]],],
-        'Employment_Instructions'=>['Text'=>['string'],],
-        'Employment_Job'=>[
-            'Annonce_id'=>['foreignId'],
-            'Code'=>['char'=>[10],'nullable'],'Name'=>['string','nullable'],'JobName'=>['string','nullable'],'JobDescription'=>['string','nullable'],
-            'Slug'=>['string','unique'],'Functional_id'=>['foreignId'],'Count'=>['unsignedInteger','default'=>0],'AgeIn'=>['date'],'Age'=>['unsignedInteger','default'=>35],
-            'Experince'=>['unsignedInteger','default'=>0],'Driver'=>['enum'=>[0,1],'default'=>1],'Statue'=>['enum'=>['Published', 'Draft']],
-        ],
-        'Employment_Mir'=>['Father'=>['unsignedInteger','nullable','default'=>0],'Text'=>['string'],],
-        'Employment_PagesDinamic'=>['Name'=>['string'],'Control'=>['string'],'Function'=>['string'],],
-        'Employment_PagesStatic'=>['Title'=>['string'],'Content'=>['longText'],'Data'=>['longText','nullable'],],
-        'Employment_People'=>[
-            'Annonce_id'=>['foreignId'],
-            'Stage_id'=>['foreignId'],
-            'Job_id'=>['foreignId'],
-            'Nid'=>['unsignedBigInteger'],
-            'Sex'=>['enum'=>[0,1]],
-            'BirthDate'=>['date'],
-            'AgeYears'=>['unsignedInteger','nullable'],
-            'AgeMonths'=>['unsignedInteger','nullable'],
-            'AgeDays'=>['unsignedInteger','nullable'],
-            'FName'=>['string'],
-            'SName'=>['string'],
-            'TName'=>['string'],
-            'LName'=>['string'],
-            'BornGov'=>['foreignId'],
-            'BornCity'=>['foreignId'],
-            'LiveGov'=>['foreignId'],
-            'LiveCity'=>['foreignId'],
-            'LiveAddress'=>['string','nullable'],'LandLine'=>['string','nullable'],'Mobile'=>['string','nullable'],'Email'=>['string','nullable'],
-            'Health_id'=>['foreignId','nullable'],
-            'Mir_id'=>['foreignId','nullable'],
-            'Arm_id'=>['foreignId','nullable'],
-            'Ama_id'=>['foreignId','nullable'],
-            'Education_id'=>['foreignId','nullable'],
-            'EducationYear'=>['string','nullable'],'Experince'=>['unsignedInteger','default'=>0],'InsuranceNumber'=>['unsignedInteger','nullable','default'=>0],'FileName'=>['string'],
-            'DriverDegree_id'=>['foreignId','nullable'],'DriverStart'=>['date','nullable'],'DriverEnd'=>['date','nullable'],'Result'=>['longText','nullable'],'Message'=>['longText','nullable'],
-        ],
-        'Employment_PeopleNewData'=>[
-            'Uid'=>['foreignId'],
-            'Stage_id'=>['foreignId'],
-            'Job_id'=>['foreignId','nullable'],
-            'FName'=>['string'],
-            'SName'=>['string'],
-            'TName'=>['string'],
-            'LName'=>['string'],
-            'BornGov'=>['foreignId'],
-            'BornCity'=>['foreignId'],
-            'LiveGov'=>['foreignId'],
-            'LiveCity'=>['foreignId'],
-            'LiveAddress'=>['string','nullable'],
-            'LandLLine'=>['string','nullable'],
-            'Mobile'=>['string','nullable'],
-            'Email'=>['string','nullable'],
-            'Health_id'=>['foreignId','nullable'],
-            'Mir_id'=>['foreignId','nullable'],
-            'Arm_id'=>['foreignId','nullable'],
-            'Ama_id'=>['foreignId','nullable'],
-            'Education_id'=>['foreignId','nullable'],
-            'EducationYear'=>['string','nullable'],
-            'Experince'=>['unsignedInteger','nullable'],
-            'InsuranceNumber'=>['unsignedInteger','nullable'],
-            'FileName'=>['string','nullable'],
-            'DriverDegree_id'=>['foreignId','nullable'],
-            'DriverStart'=>['date','nullable'],
-            'DriverEnd'=>['date','nullable'],
-            'Result'=>['longText','nullable'],
-            'Statue'=>['enum'=>[1,2],'nullable'],
-        ],
-        'Employment_PeopleDegree'=>[
-            'Uid'=>['foreignId','unique'],
-            'Written'=>['float','nullable'],
-            'Practical'=>['float','nullable'],
-            'Interview'=>['float','nullable'],
-        ],
-        'Employment_PeopleNewStage'=>[
-            'Uid'=>['foreignId'],
-            'NewStatue'=>['foreignId'],
-            'NewMessage'=>['longText','nullable'],
-            'Stage_id'=>['foreignId'],
-        ],
-        'Employment_Places'=>[
-            'Text'=>['string'],
-        ],
-        'Employment_Qualifications'=>[
-            'Type'=>['enum'=>['Private','Public']],
-            'Text'=>['string'],
-        ],
-        'Employment_Stages'=>[
-            'Title'=>['string'],
-            'Days'=>['unsignedInteger','nullable'],
-            'Page'=>['string'],
-            'Front'=>['enum'=>[0,1]],
-        ],
-        'Employment_Status'=>[
-            'Text'=>['string','unique'],
-        ],
-        'Governorates'=>[
-            'Name'=>['string','unique'],
-            'English'=>['string','unique'],
-        ],
-        'Employment_ApplyLog'=>[
-            'userData'=>['jsonb'],
-        ],
-        'Employment_StartAnnonces'=>[
-            'Number'=>['unsignedInteger'],
-            'Year'=>['unsignedInteger'],
-            'Description'=>['longText'],
-            'Stage_id'=>['foreignId'],
-            'Slug'=>['string','unique'],
-            'Statue'=>['enum'=>['Published','Draft']],
-        ],
-        'Cities'=>[
-            'Gov_id'=>['foreignId'],
-            'Name'=>['string'],
-            'English'=>['string'],
-        ],
-        'Employment_Grievance'=>[
-            'Uid'=>['foreignId'],
-            'Stage_id'=>['foreignId']
-        ],
-        'employment_Job_Ama'=>[
-            'Job_id'=>['foreignId'],
-            'Ama_id'=>['foreignId']
-        ],
-        'employment_Job_Arm'=>[
-            'Job_id'=>['foreignId'],
-            'Arm_id'=>['foreignId']
-        ],
-        'employment_Job_City'=>[
-            'Job_id'=>['foreignId'],
-            'City_id'=>['foreignId']
-        ],
-        'employment_Job_Driver'=>['Job_id'=>['foreignId'],'Driver_id'=>['foreignId']],
-        'employment_Job_Education'=>['Job_id'=>['foreignId'],'Education_id'=>['foreignId']],
-        'employment_Job_Health'=>['Job_id'=>['foreignId'],'Health_id'=>['foreignId']],
-        'employment_Job_IncludedFiles'=>['Job_id'=>['foreignId'],'IncludedFiles_id'=>['foreignId']],
-        'employment_Job_Instructions'=>['Job_id'=>['foreignId'],'Instructions_id'=>['foreignId']],
-        'employment_Job_Mir'=>['Job_id'=>['foreignId'],'Mir_id'=>['foreignId']],
-        'employment_Job_Places'=>['Job_id'=>['foreignId'],'Place_id'=>['foreignId'],'Count'=>['unsignedInteger']],
-        'employment_Job_Qualifications'=>['Job_id'=>['foreignId'],'Qualifications_id'=>['foreignId']],
-        'employment_startannonces_Qualifications'=>['Annonce_id'=>['foreignId'],'Qualification_id'=>['foreignId']],
-        'employment_startannonces_Governorates'=>['Annonce_id'=>['foreignId'],'Governorate_id'=>['foreignId']],
-        
-        ]
-];

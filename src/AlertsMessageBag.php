@@ -36,7 +36,24 @@ class AlertsMessageBag extends MessageBag
         }
         parent::__construct($messages);
     }
-
+    function testit($level = null)
+    {
+        $alerts = $this->session->get($this->getSessionKey());
+        if(is_null($level) && isset($alerts)) {
+            $totalCount = 0;
+            foreach($alerts as $level => $messages) {
+                if(is_array($alerts[$level])){
+                    $totalCount = $totalCount + count($alerts[$level], COUNT_RECURSIVE);
+                }
+            }
+            return $totalCount;
+        } else {
+            if(isset($alerts[$level])) {
+                return count($alerts[$level], COUNT_RECURSIVE);
+            }
+        }
+        return 0;
+    }
     /**
      * Format an array of messages.
      *
@@ -130,11 +147,12 @@ class AlertsMessageBag extends MessageBag
     public function count($level = null): int
     {
         $alerts = $this->session->get($this->getSessionKey());
-
         if(is_null($level) && isset($alerts)) {
             $totalCount = 0;
             foreach($alerts as $level => $messages) {
-                $totalCount = $totalCount + count($alerts[$level], COUNT_RECURSIVE);
+                if(is_array($alerts[$level])){
+                    $totalCount = $totalCount + count($alerts[$level], COUNT_RECURSIVE);
+                }
             }
             return $totalCount;
         } else {
@@ -142,7 +160,6 @@ class AlertsMessageBag extends MessageBag
                 return count($alerts[$level], COUNT_RECURSIVE);
             }
         }
-
         return 0;
     }
 
@@ -153,7 +170,7 @@ class AlertsMessageBag extends MessageBag
      */
     public function getLevels()
     {
-        return (array) $this->config->get('Amer.amer.Alert.levels');
+        return (array) $this->config->get('Amer.Amer.Alert.levels');
     }
 
     /**
@@ -163,7 +180,7 @@ class AlertsMessageBag extends MessageBag
      */
     protected function getSessionKey()
     {
-        return $this->config->get('Amer.amer.Alert.session_key');
+        return $this->config->get('Amer.Amer.Alert.session_key');
     }
 
     /**

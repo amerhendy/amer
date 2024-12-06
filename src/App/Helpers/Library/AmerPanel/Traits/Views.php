@@ -38,10 +38,10 @@ trait Views
     public function getEditContentClass(){return $this->get('update.contentClass') ?? config('Amer.Base.update.contentClass', 'col-md-8 bold-labels');}
 	//////////////////////////////////
     public function setReorderView($view){return $this->set('reorder.view', $view);}
-    public function getReorderView(){return $this->get('reorder.view') ?? 'crud::reorder';}
+    public function getReorderView(){return $this->get('reorder.view') ?? mainview('main.Layouts.reorder');}
 	/////////////////////////////////////
     public function setReorderContentClass(string $class){return $this->set('reorder.contentClass', $class);}
-    public function getReorderContentClass(){return $this->get('reorder.contentClass') ?? config('Amer.Basereorder.contentClass', 'col-md-8 col-md-offset-2');}
+    public function getReorderContentClass(){return $this->get('reorder.contentClass') ?? config('Amer.Base.reorder.contentClass', 'col-md-8 col-md-offset-2');}
 	////////////////////////////////////////////////////////
     // -------
     // ALIASES
@@ -68,7 +68,7 @@ trait Views
             return $item.'.'.$viewPath;
         }, ViewNamespaces::getFor('fields'));
         foreach ($paths as $path) {
-            
+
             if (view()->exists($path)) {
                 return $path;
             }

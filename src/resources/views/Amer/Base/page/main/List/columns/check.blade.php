@@ -10,19 +10,18 @@
     }
 
     $column['icon'] = $column['value'] != false
-        ? ($column['icons']['checked'] ?? 'la-check-circle')
-        : ($column['icons']['unchecked'] ?? 'la-circle');
-
+        ? ($column['icons']['checked'] ?? 'fa-check-square')
+        : ($column['icons']['unchecked'] ?? 'fa-square-xmark');
     $column['text'] = $column['value'] != false
-        ? ($column['labels']['checked'] ?? trans('backpack::crud.yes'))
-        : ($column['labels']['unchecked'] ?? trans('backpack::crud.no'));
+        ? ($column['labels']['checked'] ?? trans('AMER::crud.yes'))
+        : ($column['labels']['unchecked'] ?? trans('AMER::crud.no'));
 
     $column['text'] = $column['prefix'].$column['text'].$column['suffix'];
 @endphp
 
 <span>
     @includeWhen(!empty($column['wrapper']), 'crud::columns.inc.wrapper_start')
-    <i class="la {{ $column['icon'] }}"></i>
+    <i class="fa {{ $column['icon'] }}"></i>
     @includeWhen(!empty($column['wrapper']), 'crud::columns.inc.wrapper_end')
 </span>
 

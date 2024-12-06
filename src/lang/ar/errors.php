@@ -67,7 +67,7 @@ return[
     'uploades_only_one'=>' يجب تحميل ملف واحد فقط',
     'uploades_size_6000'=>'الملف المطلوب تحميله يجب الا يزيد عن 6 ميجا',
     'ajax_error_title' => 'خطأ',
-    'ajax_error_text'  => 'خطأ فى تحميل البيانات، من فضلك حاول مرة اخرى.',  
+    'ajax_error_text'  => 'خطأ فى تحميل البيانات، من فضلك حاول مرة اخرى.',
     'unauthorized_access' => 'Unauthorized access - you do not have the necessary permissions to see this page.',
     'please_fix'          => 'Please fix the following errors:',
 
@@ -78,5 +78,35 @@ return[
     'apiReciveData'=>'خطأ فى البيانات المحملة من الاتصال',
     'required'=>'مطلوب',
     'HTTP_REFERER'=>'غير مسموح بدخول الصفحة بأسلوب غير معتمد',
-    
+    'Information Responses'=>[
+        100=>'Continue',
+    ],
+    'Successful Responses'=>[
+        200=>'ok',
+        201=>'Created',
+        202=>'Accepted',
+    ],
+    'Redirection messages'=>[
+        301=>'Moved Permanently',
+        308=>'Permanent Redirect',
+    ],
+    'Client error responses'=>[
+        400=>'Bad Request',
+        401=>'Unauthorized',
+        402=>'Payment Required',
+        403=>'Forbidden',
+        404=>'Not Found',
+        405=>'Method Not Allowed',
+        406=>'Not Acceptable',
+        407=>'Proxy Authentication Required',
+        408=>'Request Timeout',
+        409=>'Conflict',
+        414=>'URI Too Long',
+        426=>'Upgrade Required',
+        429=>'Too Many Requests',
+    ],
+    'Server error responses'=>[
+        500=>'Internal Server Error',
+        511=>'Network Authentication Required',
+    ]
 ];

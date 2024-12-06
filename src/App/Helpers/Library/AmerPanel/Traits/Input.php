@@ -27,7 +27,7 @@ trait Input
 
         $directInputs = $this->getDirectInputsFromInput($inputs, $model, $AmerFields, $relationMethod);
         $relationInputs = $this->getRelationDetailsFromInput($inputs, $AmerFields, $relationMethod);
-
+        //dd($directInputs, $relationInputs);
         return [$directInputs, $relationInputs];
     }
 
@@ -160,7 +160,7 @@ trait Input
      */
     public function excludeRelationFieldsExceptBelongsTo($input, $fields, $relationMethod)
     {
-        
+
         // when fields are empty we are in the main entity, we get the regular Amer relation fields
         if (empty($fields)) {
             $fields = $this->getRelationFields();

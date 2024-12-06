@@ -41,7 +41,7 @@ return
 			'update'=>
 			[
 				'contentClass' => 'col-md-8 bold-labels',
-				'tabsType' => 'horizontal', 
+				'tabsType' => 'horizontal',
 				'groupedErrors' => true,
 				'inlineErrors'  => true,
 				'autoFocusOnFirstField' => true,
@@ -57,5 +57,5 @@ return
 			'locales'=>['ar','en'],
 			'show_translatable_field_icon'     => true,
     		'translatable_field_icon_position' => 'right',
-			
+
 		];

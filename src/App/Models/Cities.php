@@ -9,15 +9,15 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use Amerhendy\Amer\App\Models\Traits\AmerTrait;
-use Cviebrock\EloquentSluggable\Sluggable;
-use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 class Cities extends Model
 {
-    use HasFactory,SoftDeletes,AmerTrait,HasRoles,HasApiTokens,Sluggable, SluggableScopeHelpers;
-    protected $table = 'Cities';
+    use HasFactory,SoftDeletes,AmerTrait,HasRoles,HasApiTokens,HasUuids;
+    protected $table = 'cities';
     protected $primaryKey = 'id';
     public $incrementing = true;
     public $timestamps = true;
+    public $fillable =['name','english','gov_id'];
     protected $dates = ['deleted_at'];
     public function sluggable(): array
         {
@@ -29,17 +29,17 @@ class Cities extends Model
         }
     public function employment_Job_City()
         {
-            return $this->belongsToMany(Employment_Job::class, 'Cities','id','id');
+            return $this->belongsToMany(Employment_Job::class, 'cities','id','id');
         }
         public function Employment_Job()
 
         {
-            return $this->belongsToMany(Employment_Job::class, 'employment_Job_City','City_id','Job_id')->withTrashed();
+            return $this->belongsToMany(Employment_Job::class, 'employment_jobs_Cities','city_id','job_id')->withTrashed();
 
         }
         public function Governorates()
-                {
-                    return $this->belongsTo(Governorates::class, 'Gov_id','id');
-                }
-            
+        {
+            return $this->belongsTo(Governorates::class, 'gov_id','id');
+        }
+
 }

@@ -1,3 +1,4 @@
+<!--inline_create_modal.blade -->
 @php
     $loadedFields = json_decode($parentLoadedFields);
     foreach($loadedFields as $loadedField) {
@@ -19,3 +20,4 @@
         <button type="button" class="btn btn-secondary" id="cancelButton">{{trans('AMER::actions.cancel')}}</button>
           <button type="button" class="btn btn-primary" id="saveButton">{{trans('AMER::actions.save')}}</button>
 </div>
+<!--inline_create_modal.blade -->

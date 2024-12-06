@@ -2,9 +2,10 @@
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
 use Illuminate\View\Compilers\BladeCompiler;
 use Amerhendy\Amer\App\Helpers\AssetManager;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\{Str,Stringable};
 if (! function_exists('Amerurl')) {
     function Amerurl($path = null, $parameters = [], $secure = null)
     {
@@ -26,7 +27,7 @@ if (! function_exists('Amer_guard_name')) {
         }else{
             return config('Amer.employers.auth.middleware_key', config('auth.defaults.guard'));
         }
-        
+
     }
 }
 if (! function_exists('amer_auth')) {
@@ -37,7 +38,7 @@ if (! function_exists('amer_auth')) {
         }else{
             return \Auth::guard(Amer_guard_name($type));
         }
-        
+
     }
 }
 if (! function_exists('amer_user')) {
@@ -75,14 +76,14 @@ if (! Str::hasMacro('dotsToSquareBrackets')) {
     Str::macro('dotsToSquareBrackets', function ($string, $ignore = [], $keyFirst = true) {
         $stringParts = explode('.', $string);
             $result = '';
-    
+
             foreach ($stringParts as $key => $part) {
                 if (in_array($part, $ignore)) {
                     continue;
                 }
                 $result .= ($key === 0 && $keyFirst) ? $part : '['.$part.']';
             }
-    
+
             return $result;
     });
 }
@@ -162,7 +163,7 @@ if (! function_exists('listview')) {
         }
         $theme.='Base.page.main.List.';
         $returnView = $theme.$view;
-        if (! view()->exists($returnView)) {    
+        if (! view()->exists($returnView)) {
             $returnView = $originalTheme.$view;
         }
         return $returnView;
@@ -184,56 +185,62 @@ if (! function_exists('Widgetview')) {
         return $returnView;
     }
 }
-
     $this->callAfterResolving('blade.compiler', function (BladeCompiler $bladeCompiler) {
-    $bladeCompiler->directive('loadStyleOnce', function ($parameter) {
-        $AssetManager=new AssetManager();
-
-        return "<?php AmerHelper::echoCss({$parameter}); ?>";
-    });
-
-    $bladeCompiler->directive('loadScriptOnce', function ($parameter) {
-            return "<?php AmerHelper::echoJs({$parameter}); ?>";
-        
-    });
-
-    $bladeCompiler->directive('loadOnce', function ($parameter) {
-        // determine if it's a CSS or JS file
-        $cleanParameter = Str::of($parameter)->trim("'")->trim('"')->trim('`');
-        $filePath = Str::of($cleanParameter)->before('?')->before('#');
-
-        // mey be useful to get the second parameter
-        // if (Str::contains($parameter, ',')) {
-        //     $secondParameter = Str::of($parameter)->after(',')->trim(' ');
-        // }
-
-        if (substr($filePath, -3) == '.js') {
-            return "<?php AmerHelper::echoJs({$parameter}); ?>";
-        }
-
-        if (substr($filePath, -4) == '.css') {
+        $bladeCompiler->directive('loadStyleOnce', function ($parameter) {
+            $AssetManager=new AssetManager();
             return "<?php AmerHelper::echoCss({$parameter}); ?>";
+        });
+        $bladeCompiler->directive('loadScriptOnce', function ($parameter) {
+                return "<?php AmerHelper::echoJs({$parameter}); ?>";
+
+        });
+        $bladeCompiler->directive('loadOnce', function ($parameter) {
+            // determine if it's a CSS or JS file
+            $cleanParameter = Str::of($parameter)->trim("'")->trim('"')->trim('`');
+            $filePath = Str::of($cleanParameter)->before('?')->before('#');
+
+            // mey be useful to get the second parameter
+            // if (Str::contains($parameter, ',')) {
+            //     $secondParameter = Str::of($parameter)->after(',')->trim(' ');
+            // }
+
+            if (substr($filePath, -3) == '.js') {
+                return "<?php AmerHelper::echoJs({$parameter}); ?>";
+            }
+
+            if (substr($filePath, -4) == '.css') {
+                return "<?php AmerHelper::echoCss({$parameter}); ?>";
+            }
+
+            // it's a block start
+            return "<?php if(! AmerHelper::isLoaded('".$cleanParameter."')) { AmerHelper::markAsLoaded('".$cleanParameter."');  ?>";
+        });
+        $bladeCompiler->directive('endLoadOnce', function () {
+            return '<?php } ?>';
+        });
+    });
+if( ! function_exists('cleanDir')){
+    function cleanDir($dir){
+        if(is_array($dir)){
+            $dir=implode(DIRECTORY_SEPARATOR,$dir);
         }
+        if(DIRECTORY_SEPARATOR == '/'){$err='\\';}else{$err='/';}
+        $dir=\Str::finish($dir, DIRECTORY_SEPARATOR);
+        $dir=\Str::replace($err, DIRECTORY_SEPARATOR, $dir);
 
-        // it's a block start
-        return "<?php if(! AmerHelper::isLoaded('".$cleanParameter."')) { AmerHelper::markAsLoaded('".$cleanParameter."');  ?>";
-    });
-
-    $bladeCompiler->directive('endLoadOnce', function () {
-        return '<?php } ?>';
-    });
-});
+        return realpath($dir);
+    }
+}
 if( ! function_exists('getallfiles')){
     function getallfiles($path){
+        $path=cleanDir($path);
         $files = array_diff(scandir($path), array('.', '..'));
         $out=[];
         foreach($files as $a=>$b){
-            if(is_dir($path."/".$b)){
-                $out=array_merge($out,getallfiles($path."/".$b));
+            if(is_dir($path.DIRECTORY_SEPARATOR.$b)){
+                $out=array_merge($out,getallfiles($path.DIRECTORY_SEPARATOR.$b));
             }else{
-                $ab=Str::after($path,'/vendor');
-                $ab=Str::replace('//','/',$ab);
-                $ab=Str::finish($ab,'/');
+                $ab=Str::finish($path,DIRECTORY_SEPARATOR);
                 $out[]=$ab.$b;
             }
         }
@@ -320,5 +327,11 @@ if (! function_exists('is_multidimensional_array')) {
         return false;
     }
 }
-
+Blueprint::macro('uid', function () {
+    $this->uuid('id')->default(DB::raw('uuid_generate_v4()'))->primary();
+});
+Blueprint::macro('dates', function () {
+    $this->timestampsTz(precision: 0);
+    $this->softDeletes('deleted_at', precision: 0);
+});
 ?>

@@ -1,0 +1,10 @@
+
+.requireinput{
+    border-color: #0B90C4;
+}
+.select2-results__group{
+background-color:gray;
+}
+.has-error{
+    border-color: rgb(185, 74, 72) !important;
+}

@@ -40,6 +40,7 @@ class AmerField
     protected $attributes;
 
     public function __construct($fieldName){
+
         if(empty($fieldName)) {
             abort(500, 'Field name can\'t be empty.');
         }

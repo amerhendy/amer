@@ -21,7 +21,7 @@ trait FetchOperation
 
         if (count($matches[1])) {
             foreach ($matches[1] as $methodName) {
-                Route::get($segment.'/fetch/'.$methodName, [
+                Route::post($segment.'/fetch/'.$methodName, [
                     'as'        => $segment.'.fetch'.Str::studly($methodName),
                     'uses'      => $controller.'@fetch'.$methodName,
                     'operation' => 'FetchOperation',
@@ -40,7 +40,7 @@ trait FetchOperation
     {
         // get the actual words that were used to search for an item (the search term / search string)
         $search_string = request()->input('q') ?? false;
-        
+
         // if the Class was passed as the sole argument, use that as the configured Model
         // otherwise assume the arguments are actually the configuration array
         $config = [];

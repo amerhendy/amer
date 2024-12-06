@@ -17,7 +17,6 @@ trait InlineCreateOperation
             'operation' => 'InlineCreate',
         ]);
     }
-
     /**
      * Add the default settings, buttons, etc that this operation needs.
      */
@@ -49,9 +48,10 @@ trait InlineCreateOperation
         );
     }
     public function storeInlineCreate(){
+        $request=Request();
+        $fd=$request->toArray();
         $result = $this->store();
-        Alert::flush();
-
+        \Alert::flush();
         return $result;
     }
 }

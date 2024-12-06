@@ -69,11 +69,6 @@ trait CreateOperation
     public function store()
     {
         $this->Amer->hasAccessOrFail('create');
-        $table=$this->Amer->model->getTable();
-        $lsid=\DB::table($table)->get()->max('id');
-        $id=$lsid+1;
-        $this->Amer->addField(['type' => 'hidden', 'name' => 'id', 'value'=>$id]);
-        $this->Amer->getRequest()->request->add(['id'=> $id]);
         // execute the FormRequest authorization and validation, if one is required
         $request = $this->Amer->validateRequest();
         // register any Model Events defined on fields
@@ -82,7 +77,7 @@ trait CreateOperation
         // insert item in the db
         $item = $this->Amer->create($this->Amer->getStrippedSaveRequest($request));
         $this->data['entry'] = $this->Amer->entry = $item;
-        
+
 
         // show a success message
         \Alert::success('<i class="fa fa-check"></i> '.trans('AMER::actions.insert_success'))->flash();

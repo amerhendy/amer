@@ -2,12 +2,13 @@
 @php
   $field['value'] = old_empty_or_null($field['name'], '') ??  $field['value'] ?? $field['default'] ?? '';
 @endphp
+<div class="col">
 <div class="form-check form-switch">
 <input type="hidden" name="{{ $field['name'] }}" value="{{ $field['value'] }}">
-  <input 
-        data-init-function="bpFieldInitCheckbox" 
-        class="form-check-input" 
-        type="checkbox" 
+  <input
+        data-init-function="bpFieldInitCheckbox"
+        class="form-check-input"
+        type="checkbox"
         id="flexSwitchCheckDefault"
         @if ((bool)$field['value'])
                  checked="checked"
@@ -20,10 +21,11 @@
         >
   <label class="form-check-label" for="flexSwitchCheckDefault">{!! $field['label'] !!}</label>
 </div>
+</div>
       @push('after_scripts')
       @loadOnce('bpFieldInitCheckbox')
         <script>
-          
+
             function bpFieldInitCheckbox(element) {
                 var hidden_element = element.siblings('input[type=hidden]');
                 var id = 'checkbox_'+Math.floor(Math.random() * 1000000);

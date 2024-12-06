@@ -3,11 +3,12 @@
  *  Created By Amer Hendy Language Consol For Laravel
  *      EGYPT -2023
  *     Governorates
- * 
+ *
  * **********************************************************************************/
 return [
     'Governorates'=>'محافظات',
     'singular'=>'محافظة',
+    'ENG-singular'=>'بالانكليزية',
     'plural'=>'محافظات',
     'create'=>'انشاء محافظة',
     'edit'=>'تعديل محافظة',

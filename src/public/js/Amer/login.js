@@ -66,6 +66,7 @@
         var maindiv_id=$(maindiv).attr('id');
         var link=$(e).attr('data-bs-link');
         var seria=$('#'+maindiv_id+' :input').serializeArray();
+        seria[seria.length] = { name: "location", value: window.Amer.locationData};
         var data=new Array();
         $.each(seria,function(k,v){
             var obj={};

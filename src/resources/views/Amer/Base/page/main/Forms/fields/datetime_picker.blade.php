@@ -4,7 +4,7 @@
 // if the column has been cast to Carbon or Date (using attribute casting)
 // get the value as a date string
 if (isset($field['value']) && ($field['value'] instanceof \Carbon\CarbonInterface)) {
-    
+
     $field['value'] = $field['value']->format('Y-m-d H:i:s');
 }
 
@@ -13,6 +13,7 @@ if (isset($field['value']) && ($field['value'] instanceof \Carbon\CarbonInterfac
 @include(fieldview('inc.wrapper_start'))
 <div>
     <input type="hidden" class="form-control" name="{{ $field['name'] }}" value="{{ old(square_brackets_to_dots($field['name'])) ?? $field['value'] ?? $field['default'] ?? '' }}">
+
     <label>{!! $field['label'] !!}</label>
     <div class="input-group date">
         <input
@@ -26,8 +27,9 @@ if (isset($field['value']) && ($field['value'] instanceof \Carbon\CarbonInterfac
         </div>
     </div>
     @if (isset($field['hint']))
-        <p class="help-block">{!! $field['hint'] !!}</p>
+        <small class="form-text text-muted">{!! $field['hint'] ?? '' !!}</small>
     @endif
+</div>
 @include(fieldview('inc.wrapper_end'))
     @push('after_styles')
     @loadStyleOnce('js/packages/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css')
@@ -36,7 +38,6 @@ if (isset($field['value']) && ($field['value'] instanceof \Carbon\CarbonInterfac
 
     {{-- FIELD JS - will be loaded in the after_scripts section --}}
     @push('after_scripts')
-    aaaaaaaaaaaaaa
     @loadScriptOnce('js/packages/moment/moment.js')
     @loadScriptOnce('js/packages/pc-bootstrap4-datetimepicker/build/js/bootstrap-datetimepicker.min.js')
     @loadOnce('bpFieldInitDateTimePickerElement')

@@ -1,3 +1,4 @@
+
 @push('scripts')
 @loadOnce('Noty')
 <script>

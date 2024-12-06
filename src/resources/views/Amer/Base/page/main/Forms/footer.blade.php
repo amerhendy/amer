@@ -35,77 +35,11 @@
 </form>
 </div>
 @push('after_scripts')
-@loadScriptOnce('js/Amer/form-operation.js')
 @if ($Amer->get('update.showDeleteButton') && $Amer->get('delete.configuration') && $Amer->hasAccess('delete'))
+@loadScriptOnce('js/Amer/forms/confirmAndDeleteEntry.js')
 <script>
-    function confirmAndDeleteEntry() {
-        //<!-- footer.blade -->
-        // Ask for confirmation before deleting an item
-        swal({
-            title: "{!! trans('AMER::actions.warning') !!}",
-            text: "{!! trans('AMER::actions.delete_confirm') !!}",
-            icon: "warning",
-            buttons: ["{!! trans('AMER::actions.cancel') !!}", "{!! trans('AMER::actions.delete') !!}"],
-            dangerMode: true,
-        }).then((value) => {
-            if (value) {
-                $.ajax({
-                    url: '{{ url($Amer->route.'/'.$entry->getKey()) }}',
-                    type: 'DELETE',
-                    success: function(result) {
-                        if (result !== '1') {
-                            // if the result is an array, it means
-                            // we have notification bubbles to show
-                            if (result instanceof Object) {
-                                // trigger one or more bubble notifications
-                                Object.entries(result).forEach(function(entry) {
-                                    var type = entry[0];
-                                    entry[1].forEach(function(message, i) {
-                                        new Noty({
-                                            type: type,
-                                            text: message
-                                        }).show();
-                                    });
-                                });
-                            } else { // Show an error alert
-                                swal({
-                                    title: "{!! trans('AMER::actions.delete_confirmation_not_title') !!}",
-                                    text: "{!! trans('AMER::actions.delete_confirmation_not_message') !!}",
-                                    icon: "error",
-                                    timer: 4000,
-                                    buttons: false,
-                                });
-                            }
-                        }
-                        // All is good, show a success message!
-                        swal({
-                            title: "{!! trans('AMER::actions.delete_confirmation_title') !!}",
-                            text: "{!! trans('AMER::actions.delete_confirmation_message') !!}",
-                            icon: "success",
-                            buttons: false,
-                            closeOnClickOutside: false,
-                            closeOnEsc: false,
-                        });
-
-                        // Redirect in 1 sec so that admins get to see the success message
-                        setTimeout(function () {
-                            window.location.href = '{{ is_bool($Amer->get('update.showDeleteButton')) ? url($Amer->route) : (string) $Amer->get('update.showDeleteButton') }}';
-                        }, 1000);
-                    },
-                    error: function() {
-                        // Show an alert with the result
-                        swal({
-                            title: "{!! trans('AMER::actions.delete_confirmation_not_title') !!}",
-                            text: "{!! trans('AMER::actions.delete_confirmation_not_message') !!}",
-                            icon: "error",
-                            timer: 4000,
-                            buttons: false,
-                        });
-                    }
-                });
-            }
-        });
-    }
+    var confirmAndDeleteEntryRoute= '{{ url($Amer->route.'/'.$entry->getKey()) }}';
+    var confirmAndDeleteEntryRedirect='{{ is_bool($Amer->get('update.showDeleteButton')) ? url($Amer->route) : (string) $Amer->get('update.showDeleteButton') }}';
 </script>
 @endif
 

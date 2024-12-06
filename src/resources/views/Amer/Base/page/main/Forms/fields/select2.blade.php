@@ -16,13 +16,13 @@ if (is_object($current_value) && is_subclass_of(get_class($current_value), 'Illu
 <label for="{{ $field['name'] }}" class="form-label">{!! $field['label'] ?? '' !!}</label>
 @include(fieldview('inc.translatable_icon'))
 </div>
-<select 
-name="{{ $field['name'] }}" 
-id="{{ $field['name'] }}" 
-style="width: 100%" 
-data-field-is-inline="{{var_export($inlineCreate ?? false)}}" 
-data-init-function="bpFieldInitSelect2Element" 
-data-language="{{ str_replace('_', '-', app()->getLocale()) }}" 
+<select
+name="{{ $field['name'] }}[]"
+style="width: 100%"
+data-field-is-inline="{{var_export($inlineCreate ?? false)}}"
+data-init-function="bpFieldInitSelect2Element"
+data-read-only="{{$field['readonly'] ?? 'false'}}"
+data-language="{{ str_replace('_', '-', app()->getLocale()) }}"
 @include(fieldview('inc.attributes'), ['default_class' =>  'form-control select2_field'])>
 @if(isset($field['allows_null']) && ($field['allows_null'] == true || $field['allows_null'] == "true" || $field['allows_null'] == 1))
     <option value="">-</option>
@@ -50,7 +50,7 @@ data-language="{{ str_replace('_', '-', app()->getLocale()) }}"
 </select>
 
 @if (isset($field['hint']))
-        <p class="help-block">{!! $field['hint'] !!}</p>
+        <small class="form-text text-muted">{!! $field['hint'] ?? '' !!}</small>
     @endif
 @include(fieldview('inc.wrapper_end'))
 @push('after_styles')
@@ -61,40 +61,19 @@ data-language="{{ str_replace('_', '-', app()->getLocale()) }}"
 @loadScriptOnce('js/packages/select2/dist/js/select2.full.min.js')
 @loadScriptOnce('js/packages/select2/dist/js/i18n/'.$language.'.js')
 @loadOnce('bpFieldInitSelect2Element')
+@loadScriptOnce('js/Amer/forms/select2.js')
 <script>
-    function bpFieldInitSelect2Element(element) {
-        if (!element.hasClass("select2-hidden-accessible")) 
+    bpFieldInitSelect2Element=function(element) {
+        if (!element.hasClass("select2-hidden-accessible"))
                 {
                     let $isFieldInline = element.data('field-is-inline');
-                    element.select2({
-                        language:"{{$language}}",
-                        dir:"rtl",
-                        theme: "bootstrap-5",
-                        @if(isset($field['readonly']))
-                            disabled:true,
-                        @endif
-                        dropdownParent: $isFieldInline ? $('#inline-create-dialog .modal-content') : document.body
-                    });
+                    let $disabled=element.data('read-only');
+                    var uniqueid=$(element).attr('uniqueid');
+                    registerSelect2WantedData(uniqueid);
+                    select2f=setSelect2Info($(element).attr('uniqueid'));
+                    element.select2(select2f);
                 }
         }
 </script>
 @endLoadOnce
 @endpush
-@loadOnce('select2-readonly')
-<style>
-    select[readonly].select2-hidden-accessible + .select2-container {
-  pointer-events: none;
-  touch-action: none;
-}
-
-select[readonly].select2-hidden-accessible + .select2-container .select2-selection {
-  background: #eee;
-  box-shadow: none;
-}
-
-select[readonly].select2-hidden-accessible + .select2-container .select2-selection__arrow,
-select[readonly].select2-hidden-accessible + .select2-container .select2-selection__clear {
-  display: none;
-}
-</style>
-@endLoadOnce

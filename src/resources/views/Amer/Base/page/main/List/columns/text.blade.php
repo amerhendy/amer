@@ -6,7 +6,7 @@
     $column['prefix'] = $column['prefix'] ?? '';
     $column['suffix'] = $column['suffix'] ?? '';
     $column['text'] = $column['default'] ?? '-';
-
+    $column['replace'] =$column['replace'] ?? false;
     if($column['value'] instanceof \Closure) {
         $column['value'] = $column['value']($entry);
     }
@@ -14,10 +14,14 @@
     if(is_array($column['value'])) {
         $column['value'] = json_encode($column['value']);
     }
-
     if(!empty($column['value'])) {
         $text=\AmerHelper::createhtmllimitstring($column['value']);
         $column['text'] = $column['prefix'].$text.$column['suffix'];
+    }
+    if($column['replace']){
+        foreach ($column['replace'] as $key => $value) {
+            $column['text']=\Str::replace($key, $value, $column['text']);
+        }
     }
 @endphp
 

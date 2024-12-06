@@ -1,6 +1,6 @@
 <!-- menu_model -->
     <?php
-        $menu=new Amerhendy\Amer\App\Models\Base\menu();
+        $menu=new Amerhendy\Amer\App\Models\menu();
         foreach($menu::getTree() as $b){
             $item=$b;
             $children=$b->children->toArray();
@@ -13,14 +13,14 @@
                 if(count($children)){
                     print ' href="#" id="navbarDropdown_'.$item->id.'" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"';
                     }else{
-                        if($item->protocol == 'external_link'){
+                        if($item->type == 'external_link'){
                             $link=$item->link;
-                        }elseif($item->protocol == 'internal_link'){
+                        }elseif($item->type == 'internal_link'){
                             if($item->link == '' || $item->link == NULL){$item->link=url('');}
                             $link=$item->link;
-                        }elseif($item->protocol == 'email'){
+                        }elseif($item->type == 'email'){
                             $link="mailto:".$item->link;
-                        }elseif($item->protocol == 'nolink'){
+                        }elseif($item->type == 'nolink'){
                             $link='#';
                         }
                         if($item->target == 'popup'){
@@ -42,6 +42,6 @@
                     print '</ul>';
                 }
             echo '</li>';
-            
+
         }
     ?>

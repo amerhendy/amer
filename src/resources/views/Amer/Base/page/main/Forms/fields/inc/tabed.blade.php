@@ -1,13 +1,11 @@
 @php
     $horizontalTabs = $Amer->getTabsType()=='horizontal' ? true : false;
-
     if ($errors->any() && array_key_exists(array_keys($errors->messages())[0], $Amer->getCurrentFields()) &&
         array_key_exists('tab', $Amer->getCurrentFields()[array_keys($errors->messages())[0]])) {
         $tabWithError = ($Amer->getCurrentFields()[array_keys($errors->messages())[0]]['tab']);
     }
 @endphp
-
-@push('Amer_fields_styles')
+@push('after_styles')
     <style>
         .nav-tabs-custom {
             box-shadow: none;
@@ -32,7 +30,6 @@
 @else
     @include(fieldview('inc.show_fields'), ['fields' => $Amer->getFieldsWithoutATab()])
 @endif
-
 <div class="tab-container {{ $horizontalTabs ? '' : 'container'}} mb-2">
     <div class="nav-tabs-custom {{ $horizontalTabs ? '' : 'row'}}" id="form_tabs">
         <ul class="nav {{ $horizontalTabs ? 'nav-tabs' : 'flex-column nav-pills'}} {{ $horizontalTabs ? '' : 'col-md-3' }} mb-3" id="ex1" role="tablist">
@@ -42,10 +39,10 @@
                 class="nav-link {{ isset($tabWithError) ? ($tab == $tabWithError ? 'active' : '') : ($k == 0 ? 'active' : '') }}"
                 id="ex1-tab-1"
                 data-bs-toggle="tab"
-                href="#tab_{{ Str::slug($tab) }}" 
+                href="#tab_{{ Str::slug($tab) }}"
                 role="tab"
-                tab_name="{{ Str::slug($tab) }}" 
-                aria-controls="tab_{{ Str::slug($tab) }}" 
+                tab_name="{{ Str::slug($tab) }}"
+                aria-controls="tab_{{ Str::slug($tab) }}"
                 aria-selected="true"
                 >{{ $tab }}</a>
             </li>

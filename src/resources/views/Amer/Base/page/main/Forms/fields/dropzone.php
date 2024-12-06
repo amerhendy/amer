@@ -1,7 +1,7 @@
 @include('crud::fields.inc.wrapper_start')
     <div id="{{ $field['name'] }}-dropzone" class="dropzone dropzone-target"></div>
     @if (isset($field['hint']))
-        <p class="help-block">{!! $field['hint'] !!}</p>
+        <small class="form-text text-muted">{!! $field['hint'] ?? '' !!}</small>
     @endif
     <div id="{{ $field['name'] }}-existing" class="dropzone dropzone-previews">
     	@if (isset($field['value']) && count($field['value']))

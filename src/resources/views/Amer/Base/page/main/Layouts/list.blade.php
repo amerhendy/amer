@@ -33,17 +33,18 @@ $DefaultPageLength=$Amer->getDefaultPageLength() ?? $settings['list.defaultPageL
         </div>
         <div class="col-sm-12">
           <table
-           id="AmerTable" 
-           class="table table-striped table-striped-columns table-hover table-sm display table-bordered shadow rounded compact hover row-border cell-border nowrap" 
+           id="AmerTable"
+           class="table table-striped table-striped-columnstable-hover table-sm display table-bordered shadow rounded compact hover row-border cell-border nowrap"
           data-responsive-table="{{ (int) $Amer->getOperationSetting('responsiveTable') }}"
           data-has-details-row="{{ (int) $Amer->getOperationSetting('detailsRow') }}"
           data-has-bulk-actions="{{ (int) $Amer->getOperationSetting('bulkActions') }}"
-          data-has-line-buttons-as-dropdown="{{ (int) $Amer->getOperationSetting('lineButtonsAsDropdown') }}">
+          data-has-line-buttons-as-dropdown="{{ (int) $Amer->getOperationSetting('lineButtonsAsDropdown') }}"
+          >
             <thead class="table align-middle table-dark text-right">
               @foreach($Amer->columns() as $column)
-              <th 
+              <th
               class="text-center"
-              scope="col" 
+              scope="col"
               data-orderable="false"
               data-priority="{{ $column['priority'] }}"
               data-column-name  ="{{ $column['name'] }}"
@@ -79,8 +80,8 @@ $DefaultPageLength=$Amer->getDefaultPageLength() ?? $settings['list.defaultPageL
                     {!! $column['label'] !!}
               </th>
               @endforeach
-              <th 
-              scope="col" 
+              <th
+              scope="col"
               data-orderable="false"
               >{{trans('AMER::actions.actions')}}</th>
               @php
@@ -116,7 +117,7 @@ $DefaultPageLength=$Amer->getDefaultPageLength() ?? $settings['list.defaultPageL
               <div id="datatable_info_stack" class="mt-sm-0 mt-2 d-print-none"></div>
         </div>
         </div>
-      </div>        
+      </div>
     </div>
   </div>
 </div>
@@ -130,35 +131,54 @@ $DefaultPageLength=$Amer->getDefaultPageLength() ?? $settings['list.defaultPageL
     </div>
   </div>
 </div>
-@php 
+@php
 //dd($settings['list.buttons']);
 @endphp
 @endsection
-
+@php
+    // as it is possible that we can be redirected with persistent table we save the alerts in a variable
+    // and flush them from session, so we will get them later from localStorage.
+    $Amer_alerts = \Alert::getMessages();
+    \Alert::flush();
+    $access=[];
+    foreach ($Amer->routelist as $key => $value) {
+        $access[]=$key;
+    }
+ @endphp
 @push('after_scripts')
-  @loadScriptOnce("js/packages/DataTables/datatables.min.js")
+<script>
+    let Route="{{$Amer->getRoute()}}";
+    let SlugRoute="{{ Str::slug($Amer->getRoute()) }}";
+    let newAlerts = @json($Amer_alerts);
+    let showEntryCount={{ var_export($Amer->getOperationSetting('showEntryCount') ?? true) }};
+    var DefaultPageLength = {{ $DefaultPageLength }};
+    let lengthMenu=`@json($Amer->getPageLengthMenu())`;
+    let searchableTable=@json($Amer->getOperationSetting('searchableTable') ?? true);
+    let exportButtons= JSON.parse('{!! json_encode($Amer->get('list.export_buttons')) !!}');
+    let searchQueryRoute=`{!! url($Amer->getrequest()->getpathInfo().'/search').'?'.Request::getQueryString() !!}`;
+    let totalEntryCount="{{$Amer->getOperationSetting('totalEntryCount') ?? false}}";
+    let getPersistentTable={{$Amer->getPersistentTable()}};
+    let getResponsiveTable={{$Amer->getResponsiveTable()}};
+    let getPersistentTableDuration="{{$Amer->getPersistentTableDuration()}}";
+    let urlStart = "{{ url($Amer->getrequest()->getpathInfo()) }}";
+    let getSubheading={{$Amer->getSubheading() ?? true}};
+    let resetButton={{$Amer->getOperationSetting('resetButton') ?? true}};
+    let detailsRow={{$Amer->get('list.detailsRow') ?? 'false'}};
+    let access={{Js::from($access)}};
+</script>
+    @loadScriptOnce("js/packages/DataTables/datatables.min.js")
+    @loadScriptOnce("js/packages/DataTables/Buttons-2.4.2/js/buttons.bootstrap5.min.js")
+    @loadScriptOnce("js/Amer/list/datatables.js")
   @loadOnce('test_table')
     @include(listview('DataTables.datatables'))
-    <script>
-    function readmore(e,type){
-    mainobject=$(e).parent();
-    td=$(mainobject).parent()
-    tdchilds=$(td).children();
-    for(i=0;i<tdchilds.length;i++){
-        if($(tdchilds[i]).attr('id') == type){
-            targetdiv=$(tdchilds[i]);
-        }
-    }
-    $(targetdiv).css('display','block')
-    $(mainobject).css('display','none')
-}
-</script>
   @endLoadOnce
 @endpush
-
 @push('after_styles')
-  @loadStyleOnce("js/packages/DataTables/datatables.min.css")
+@loadStyleOnce("js/packages/DataTables/datatables.min.css")
+@loadStyleOnce("js/packages/DataTables/DataTables-1.13.7/css/dataTables.bootstrap5.css")
+@loadStyleOnce("js/packages/DataTables/Buttons-2.4.2/css/buttons.bootstrap5.css")
 @endpush
+
       <?php
 $cols=Arr::map($Amer->columns(),function($v,$k){
     return $v['type'];

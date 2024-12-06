@@ -50,7 +50,7 @@
         <a class="btn btn-xs btn-default clear" style="margin-top: 5px;"><i class="fa fa-times"></i> {{ trans('AMER::actions.clear') }}</a>
     @endif
     @if (isset($field['hint']))
-        <p class="help-block">{!! $field['hint'] !!}</p>
+        <small class="form-text text-muted">{!! $field['hint'] ?? '' !!}</small>
     @endif
 @include(fieldview('inc.wrapper_end'))
     @push('after_styles')
@@ -70,11 +70,8 @@
                 if (!element.hasClass("select2-hidden-accessible"))
                 {
                     let $isFieldInline = element.data('field-is-inline');
-
-                    var $obj = element.select2({
-                        theme: "bootstrap-5",
-                        dropdownParent: $isFieldInline ? $('#inline-create-dialog .modal-content') : document.body
-                    });
+                    select2f=setSelect2Info($(element).attr('uniqueid'));
+                    var $obj = $(element).select2(select2f);
 
                     //get options ids stored in the field.
                     var options = JSON.parse(element.attr('data-options-for-js'));

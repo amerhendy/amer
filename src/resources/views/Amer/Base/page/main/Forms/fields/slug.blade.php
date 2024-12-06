@@ -22,7 +22,7 @@ $target=json_encode($field["target"], JSON_FORCE_OBJECT);
             @include(fieldview('inc.attributes'))
         >
         @if (isset($field['hint']))
-        <p class="help-block">{!! $field['hint'] !!}</p>
+        <small class="form-text text-muted">{!! $field['hint'] ?? '' !!}</small>
     @endif
 @include(fieldview('inc.wrapper_end'))
 @push('after_scripts')
