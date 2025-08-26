@@ -2,6 +2,7 @@
     "name": "amerhendy/amer",
 	"description": "Amer",
     "license": "proprietary",
+    "version": "1.0.0",
     "autoload": {
         "psr-4": {
             "Amerhendy\\Amer\\": "src/"
