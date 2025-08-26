@@ -1,0 +1,2 @@
+<!-- serial -->
+@include(fieldview('number'))

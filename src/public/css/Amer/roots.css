@@ -1,0 +1,18 @@
+[data-bs-theme=dark] {
+    --bs-graidnet:450deg;
+    --color-p:#034a6d;
+    --color-a:#0a384f;
+    --menubackground-rgb:10, 56, 79;
+    --menutextcolor-rgb:255,255,255;
+}
+[data-bs-theme=light] {
+    --bs-graidnet:45deg;
+    --color-p:#45cafc;
+    --color-a:#05ffa3;
+    --menubackground-rgb:249, 249, 249;
+    --menutextcolor-rgb:10, 56, 79;
+}
+.list-group .collapse{
+    padding-right: 20px;
+    border-bottom: 1px solid;
+  }
